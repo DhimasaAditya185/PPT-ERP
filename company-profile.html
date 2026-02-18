@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Company Profile - PT Imaji Cipta Technology</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #0A192F;
+            color: #e0e0e0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 56px;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .toolbar-logo {
+            height: 36px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .toolbar-logo img {
+            height: 32px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .toolbar-logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .toolbar-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .toolbar-title {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .btn-download {
+            background: #00B4D8;
+            color: #0A192F;
+        }
+
+        .btn-download:hover {
+            background: #00C9F0;
+            box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3);
+        }
+
+        /* PDF Viewer Area */
+        .viewer-container {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0d1f36;
+        }
+
+        /* State: PDF loaded */
+        .pdf-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+
+        /* State: No PDF yet (placeholder) */
+        .placeholder {
+            text-align: center;
+            padding: 40px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .placeholder-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+        }
+
+        .placeholder-icon i {
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .placeholder h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 12px;
+        }
+
+        .placeholder p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.35);
+            max-width: 420px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .upload-area {
+            border: 2px dashed rgba(0, 180, 216, 0.3);
+            border-radius: 16px;
+            padding: 30px 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(0, 180, 216, 0.03);
+        }
+
+        .upload-area:hover {
+            border-color: rgba(0, 180, 216, 0.6);
+            background: rgba(0, 180, 216, 0.06);
+        }
+
+        .upload-area i {
+            font-size: 24px;
+            color: #00B4D8;
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0;
+        }
+
+        .upload-area .browse-text {
+            color: #00B4D8;
+            font-weight: 600;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Info text below upload */
+        .upload-info {
+            margin-top: 16px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .upload-info code {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .toolbar { padding: 0 16px; }
+            .toolbar-logo span { display: none; }
+            .toolbar-divider { display: none; }
+            .toolbar-title { font-size: 13px; }
+            .btn { padding: 7px 14px; font-size: 12px; }
+            .btn span.btn-text { display: none; }
+            .placeholder h2 { font-size: 20px; }
+            .placeholder p { font-size: 13px; }
+            .upload-area { padding: 20px 24px; }
+            .placeholder-icon { width: 90px; height: 90px; }
+            .placeholder-icon i { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <a href="index.html" class="toolbar-logo">
+                <img src="Logo.png" alt="IMAJI">
+                <span>IMAJI</span>
+            </a>
+            <div class="toolbar-divider"></div>
+            <span class="toolbar-title">Company Profile</span>
+        </div>
+        <div class="toolbar-actions">
+            <a href="index.html" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i>
+                <span class="btn-text">Kembali</span>
+            </a>
+            <button class="btn btn-download" id="btnDownload" style="display:none;" onclick="downloadPdf()">
+                <i class="fas fa-download"></i>
+                <span class="btn-text">Download PDF</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Viewer -->
+    <div class="viewer-container">
+        <iframe class="pdf-frame" id="pdfFrame"></iframe>
+
+        <div class="placeholder" id="placeholder">
+            <div class="placeholder-icon">
+                <i class="fas fa-file-pdf"></i>
+            </div>
+            <h2>Company Profile</h2>
+            <p>Tempatkan file PDF company profile Anda untuk ditampilkan di sini.</p>
+
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop PDF di sini, atau <span class="browse-text">pilih file</span></p>
+            </div>
+            <input type="file" id="fileInput" class="file-input" accept=".pdf" onchange="handleFileSelect(event)">
+
+            <p class="upload-info">
+                Atau letakkan file <code>company-profile.pdf</code> di folder yang sama dengan file ini.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentPdfUrl = null;
+
+        // Try to load company-profile.pdf automatically
+        function tryLoadDefaultPdf() {
+            const pdfUrl = 'company-profile.pdf?v=' + Date.now();
+            fetch(pdfUrl, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        showPdf(pdfUrl);
+                    }
+                })
+                .catch(() => {
+                    // PDF not found, show placeholder
+                });
+        }
+
+        function showPdf(url) {
+            const frame = document.getElementById('pdfFrame');
+            const placeholder = document.getElementById('placeholder');
+            const btnDownload = document.getElementById('btnDownload');
+
+            frame.src = url;
+            frame.style.display = 'block';
+            placeholder.style.display = 'none';
+            btnDownload.style.display = 'flex';
+            currentPdfUrl = url;
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file && file.type === 'application/pdf') {
+                const url = URL.createObjectURL(file);
+                showPdf(url);
+                // Store the file for download
+                currentPdfUrl = url;
+                window._uploadedFile = file;
+            }
+        }
+
+        function downloadPdf() {
+            if (window._uploadedFile) {
+                // Downloaded uploaded file
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(window._uploadedFile);
+                a.download = window._uploadedFile.name;
+                a.click();
+            } else if (currentPdfUrl) {
+                // Download server PDF
+                const a = document.createElement('a');
+                a.href = currentPdfUrl.split('?')[0]; // Remove cache-busting param
+                a.download = 'Company-Profile-IMAJI.pdf';
+                a.click();
+            }
+        }
+
+        // Drag and drop support
+        const viewer = document.querySelector('.viewer-container');
+
+        viewer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const uploadArea = document.querySelector('.upload-area');
+            if (uploadArea) uploadArea.style.borderColor = 'rgba(0, 180, 216, 0.8)';
+        });
+
+        viewer.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            const uploadArea = document.querySelector('.upload-area');
+            if (uploadArea) uploadArea.style.borderColor = 'rgba(0, 180, 216, 0.3)';
+        });
+
+        viewer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'application/pdf') {
+                const url = URL.createObjectURL(files[0]);
+                showPdf(url);
+                window._uploadedFile = files[0];
+            }
+        });
+
+        // Try loading default PDF on page load
+        tryLoadDefaultPdf();
+    </script>
+</body>
+</html>

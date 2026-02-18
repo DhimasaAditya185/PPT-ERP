@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>IMAJI ERP + QMS - Presentation Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- html2canvas for capturing slides as images -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- PptxGenJS for PPT export -->
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/PptxGenJS@3.12.0/dist/pptxgen.bundle.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #0A192F;
+            color: #e0e0e0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ===== TOOLBAR ===== */
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 56px;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .toolbar-logo {
+            height: 36px;
+            display: flex;
+            align-items: center;
+        }
+
+        .toolbar-logo img { height: 32px; width: auto; filter: brightness(0) invert(1); }
+
+        .toolbar-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .slide-counter {
+            font-size: 13px;
+            color: #64748b;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-present {
+            background: rgba(0, 180, 216, 0.15);
+            color: #00B4D8;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+        }
+
+        .btn-present:hover {
+            background: rgba(0, 180, 216, 0.25);
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.2);
+        }
+
+        .btn-download {
+            background: #00B4D8;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #0096b4;
+            box-shadow: 0 4px 20px rgba(0, 180, 216, 0.4);
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 56px);
+            margin-top: 56px;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 220px;
+            background: rgba(10, 25, 47, 0.6);
+            border-right: 1px solid rgba(0, 180, 216, 0.1);
+            overflow-y: auto;
+            padding: 12px;
+            flex-shrink: 0;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(0, 180, 216, 0.3); border-radius: 2px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+
+        .sidebar-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 8px 4px;
+            margin-bottom: 8px;
+        }
+
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #0d2137;
+            border: 2px solid rgba(0, 180, 216, 0.1);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumbnail:hover {
+            border-color: rgba(0, 180, 216, 0.4);
+            transform: scale(1.02);
+        }
+
+        .thumbnail.active {
+            border-color: #00B4D8;
+            box-shadow: 0 0 16px rgba(0, 180, 216, 0.25);
+        }
+
+        .thumbnail-number {
+            position: absolute;
+            top: 4px; left: 6px;
+            font-size: 9px;
+            color: #64748b;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .thumbnail-label {
+            font-size: 8px;
+            color: #94a3b8;
+            text-align: center;
+            padding: 2px 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 90%;
+        }
+
+        /* ===== PREVIEW AREA ===== */
+        .preview-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(0, 180, 216, 0.03) 0%, transparent 70%);
+        }
+
+        .slide-frame {
+            width: 960px;
+            height: 540px;
+            border-radius: 6px;
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 180, 216, 0.1);
+            position: relative;
+            overflow: hidden;
+            background: #0d2137;
+        }
+
+        .slide-frame iframe {
+            width: 1280px;
+            height: 720px;
+            border: none;
+            transform: scale(0.75);
+            transform-origin: top left;
+        }
+
+        /* ===== NAV ARROWS ===== */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px; height: 48px;
+            background: rgba(0, 180, 216, 0.1);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            border-radius: 50%;
+            color: #00B4D8;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .nav-arrow:hover {
+            background: rgba(0, 180, 216, 0.25);
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.3);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-arrow.prev { left: 16px; }
+        .nav-arrow.next { right: 16px; }
+
+        /* ===== FULLSCREEN ===== */
+        .fullscreen-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen-overlay.active {
+            display: flex;
+        }
+
+        .fullscreen-overlay iframe {
+            width: 1280px;
+            height: 720px;
+            border: none;
+            transform-origin: center center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+
+        .fullscreen-nav {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(16px);
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .fullscreen-overlay:hover .fullscreen-nav {
+            opacity: 1;
+        }
+
+        .fullscreen-nav button {
+            width: 36px; height: 36px;
+            background: rgba(0, 180, 216, 0.15);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 50%;
+            color: #00B4D8;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .fullscreen-nav button:hover {
+            background: rgba(0, 180, 216, 0.3);
+        }
+
+        .fullscreen-nav .fs-counter {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: #94a3b8;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .fullscreen-nav .fs-close {
+            background: rgba(255, 80, 80, 0.15);
+            border-color: rgba(255, 80, 80, 0.3);
+            color: #ff5050;
+        }
+
+        .fullscreen-nav .fs-close:hover {
+            background: rgba(255, 80, 80, 0.3);
+        }
+
+        /* ===== LOADING ===== */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 25, 47, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loading-overlay.active { display: flex; }
+
+        .spinner {
+            width: 48px; height: 48px;
+            border: 3px solid rgba(0, 180, 216, 0.2);
+            border-top-color: #00B4D8;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text {
+            font-family: 'Montserrat', sans-serif;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .loading-progress {
+            font-family: 'Montserrat', sans-serif;
+            color: #00B4D8;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* ===== SIDEBAR TOGGLE ===== */
+        .sidebar-toggle {
+            display: none;
+            width: 40px; height: 40px;
+            background: rgba(0, 180, 216, 0.15);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 8px;
+            color: #00B4D8;
+            font-size: 16px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1400px) {
+            .slide-frame { width: 800px; height: 450px; }
+            .slide-frame iframe { transform: scale(0.625); }
+        }
+
+        @media (max-width: 1200px) {
+            .slide-frame { width: 640px; height: 360px; }
+            .slide-frame iframe { transform: scale(0.5); }
+            .sidebar { width: 180px; }
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .toolbar { padding: 0 16px; }
+            .toolbar-title { font-size: 13px; }
+            .btn span.btn-label { display: none; }
+            .btn { padding: 8px 12px; }
+
+            .sidebar-toggle { display: flex; }
+
+            .sidebar {
+                position: fixed;
+                top: 56px;
+                left: 0;
+                bottom: 0;
+                width: 200px;
+                z-index: 90;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                background: rgba(10, 25, 47, 0.95);
+                backdrop-filter: blur(12px);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                top: 56px;
+                background: rgba(0,0,0,0.5);
+                z-index: 89;
+            }
+
+            .sidebar-backdrop.open { display: block; }
+
+            .preview-area { padding: 16px; }
+            .slide-frame { width: 100%; max-width: 640px; height: auto; aspect-ratio: 16/9; }
+            .slide-frame iframe { transform: scale(0.5); }
+            .nav-arrow { width: 40px; height: 40px; font-size: 16px; }
+            .nav-arrow.prev { left: 8px; }
+            .nav-arrow.next { right: 8px; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .toolbar { height: 48px; padding: 0 12px; gap: 8px; }
+            .toolbar-left { gap: 8px; }
+            .toolbar-logo { width: 32px; height: 32px; }
+            .toolbar-logo i { font-size: 14px; }
+            .toolbar-title { display: none; }
+            .slide-counter { font-size: 11px; padding: 3px 8px; }
+
+            .btn { padding: 6px 10px; font-size: 12px; gap: 4px; border-radius: 6px; }
+
+            .main-container { height: calc(100vh - 48px); margin-top: 48px; }
+            .sidebar { top: 48px; }
+            .sidebar-backdrop { top: 48px; }
+
+            .preview-area { padding: 10px 8px; }
+            .slide-frame {
+                width: calc(100vw - 80px);
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 16/9;
+                border-radius: 4px;
+            }
+            .slide-frame iframe {
+                transform-origin: top left;
+            }
+
+            .nav-arrow { width: 32px; height: 32px; font-size: 14px; }
+            .nav-arrow.prev { left: 4px; }
+            .nav-arrow.next { right: 4px; }
+
+            .fullscreen-nav {
+                bottom: 12px;
+                padding: 8px 16px;
+                gap: 12px;
+            }
+            .fullscreen-nav button { width: 32px; height: 32px; font-size: 12px; }
+            .fullscreen-nav .fs-counter { font-size: 11px; min-width: 50px; }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .btn-present .btn-label,
+            .btn-download .btn-label { display: none; }
+            .btn { padding: 8px; min-width: 36px; justify-content: center; }
+            .slide-frame { width: calc(100vw - 60px); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+    <div class="toolbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="toolbar-logo"><img src="Logo.png" alt="IMAJI"></div>
+        <span class="toolbar-title">IMAJI ERP + QMS Presentation</span>
+        <span class="slide-counter" id="slideCounter">Slide 1 / 19</span>
+    </div>
+    <div class="toolbar-right">
+        <button class="btn btn-present" onclick="toggleFullscreen()" title="Present (F5)">
+            <i class="fas fa-play"></i> <span class="btn-label">Present</span>
+        </button>
+        <button class="btn btn-download" onclick="exportToPPTX()">
+            <i class="fas fa-download"></i> <span class="btn-label">Download PPTX</span>
+        </button>
+    </div>
+</div>
+
+<!-- SIDEBAR BACKDROP (mobile) -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-title">Slides</div>
+        <!-- Thumbnails generated by JS -->
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview-area">
+        <button class="nav-arrow prev" id="btnPrev" onclick="prevSlide()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="slide-frame" id="slideFrame">
+            <iframe id="slideIframe" src="slides/slide1.html"></iframe>
+            <script>document.getElementById('slideIframe').src = 'slides/slide1.html?v=' + Date.now();</script>
+        </div>
+
+        <button class="nav-arrow next" id="btnNext" onclick="nextSlide()">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- FULLSCREEN -->
+<div class="fullscreen-overlay" id="fullscreenOverlay">
+    <iframe id="fullscreenIframe" src=""></iframe>
+    <div class="fullscreen-nav">
+        <button onclick="fullscreenPrev()"><i class="fas fa-chevron-left"></i></button>
+        <span class="fs-counter" id="fsCounter">1 / 19</span>
+        <button onclick="fullscreenNext()"><i class="fas fa-chevron-right"></i></button>
+        <button class="fs-close" onclick="toggleFullscreen()"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="loading-progress" id="loadingProgress">0 / 19</div>
+    <div class="loading-text">Generating PPTX — capturing slides...</div>
+</div>
+
+<script>
+// ===== SLIDE CONFIG =====
+const TOTAL_SLIDES = 19;
+
+const slideLabels = [
+    "Cover",
+    "Ringkasan Eksekutif",
+    "Agenda Presentasi",
+    "Tentang IMAJI",
+    "Tantangan Manufaktur",
+    "Objectives Bisnis",
+    "Solution Overview",
+    "Arsitektur Konseptual",
+    "QMS Key Capabilities",
+    "Modul: Quality Control",
+    "Modul: Document Control",
+    "Modul: Production",
+    "Modul: Purchasing & Supplier",
+    "Modul: Inventory",
+    "CRM/Sales & Talent Mgmt",
+    "ISO 9001 Mapping",
+    "Kompetitor Analysis",
+    "Timeline & Next Steps",
+    "Penutup",
+];
+
+let currentSlide = 0;
+
+// ===== INIT THUMBNAILS =====
+function initThumbnails() {
+    const sidebar = document.getElementById('sidebar');
+    for (let i = 0; i < TOTAL_SLIDES; i++) {
+        const thumb = document.createElement('div');
+        thumb.className = `thumbnail ${i === 0 ? 'active' : ''}`;
+        thumb.id = `thumb-${i}`;
+        thumb.onclick = () => goToSlide(i);
+        thumb.innerHTML = `
+            <span class="thumbnail-number">${i + 1}</span>
+            <span class="thumbnail-label">${slideLabels[i]}</span>
+        `;
+        sidebar.appendChild(thumb);
+    }
+}
+
+function getSlideUrl(index) {
+    return `slides/slide${index + 1}.html?v=${Date.now()}`;
+}
+
+function goToSlide(index) {
+    if (index < 0 || index >= TOTAL_SLIDES) return;
+
+    // Update thumbnail active state
+    document.getElementById(`thumb-${currentSlide}`).classList.remove('active');
+    currentSlide = index;
+    document.getElementById(`thumb-${currentSlide}`).classList.add('active');
+
+    // Load slide in iframe
+    document.getElementById('slideIframe').src = getSlideUrl(currentSlide);
+
+    // Update counter
+    document.getElementById('slideCounter').textContent = `Slide ${currentSlide + 1} / ${TOTAL_SLIDES}`;
+
+    // Update nav button states
+    document.getElementById('btnPrev').disabled = currentSlide === 0;
+    document.getElementById('btnNext').disabled = currentSlide === TOTAL_SLIDES - 1;
+
+    // Scroll thumbnail into view
+    document.getElementById(`thumb-${currentSlide}`).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function prevSlide() { goToSlide(currentSlide - 1); }
+function nextSlide() { goToSlide(currentSlide + 1); }
+
+// ===== FULLSCREEN =====
+function scaleFullscreenIframe() {
+    const iframe = document.getElementById('fullscreenIframe');
+    const scaleX = window.innerWidth / 1280;
+    const scaleY = window.innerHeight / 720;
+    const scale = Math.min(scaleX, scaleY);
+    iframe.style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+
+window.addEventListener('resize', () => {
+    if (document.getElementById('fullscreenOverlay').classList.contains('active')) {
+        scaleFullscreenIframe();
+    }
+});
+
+function toggleFullscreen() {
+    const overlay = document.getElementById('fullscreenOverlay');
+    const isActive = overlay.classList.contains('active');
+
+    if (!isActive) {
+        overlay.classList.add('active');
+        document.getElementById('fullscreenIframe').src = getSlideUrl(currentSlide);
+        document.getElementById('fsCounter').textContent = `${currentSlide + 1} / ${TOTAL_SLIDES}`;
+        scaleFullscreenIframe();
+    } else {
+        overlay.classList.remove('active');
+        document.getElementById('fullscreenIframe').src = '';
+    }
+}
+
+function fullscreenPrev() {
+    if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+        document.getElementById('fullscreenIframe').src = getSlideUrl(currentSlide);
+        document.getElementById('fsCounter').textContent = `${currentSlide + 1} / ${TOTAL_SLIDES}`;
+    }
+}
+
+function fullscreenNext() {
+    if (currentSlide < TOTAL_SLIDES - 1) {
+        goToSlide(currentSlide + 1);
+        document.getElementById('fullscreenIframe').src = getSlideUrl(currentSlide);
+        document.getElementById('fsCounter').textContent = `${currentSlide + 1} / ${TOTAL_SLIDES}`;
+    }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    const isFullscreen = document.getElementById('fullscreenOverlay').classList.contains('active');
+
+    if (e.key === 'Escape' && isFullscreen) {
+        toggleFullscreen();
+        return;
+    }
+
+    if (e.key === 'F5') {
+        e.preventDefault();
+        if (!isFullscreen) toggleFullscreen();
+        return;
+    }
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        if (isFullscreen) e.preventDefault();
+        if (isFullscreen) fullscreenNext(); else nextSlide();
+    }
+
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        if (isFullscreen) e.preventDefault();
+        if (isFullscreen) fullscreenPrev(); else prevSlide();
+    }
+});
+
+// ===== PPTX EXPORT (html2canvas + PptxGenJS) =====
+async function exportToPPTX() {
+    // Check if running from file:// protocol
+    if (window.location.protocol === 'file:') {
+        alert(
+            '⚠️ Download PPTX tidak bisa dari file:// protocol.\n\n' +
+            'Cara menjalankan via HTTP server:\n\n' +
+            '1. Buka terminal/cmd di folder ini\n' +
+            '2. Jalankan: npx serve .\n' +
+            '   atau: python -m http.server 8080\n' +
+            '3. Buka http://localhost:8080 (atau port yg muncul)\n' +
+            '4. Klik Download PPTX dari sana\n\n' +
+            'Atau gunakan VSCode Live Server extension.'
+        );
+        return;
+    }
+
+    const loading = document.getElementById('loadingOverlay');
+    const progressEl = document.getElementById('loadingProgress');
+    loading.classList.add('active');
+
+    try {
+        const pptx = new PptxGenJS();
+        pptx.defineLayout({ name: 'CUSTOM', width: 13.33, height: 7.5 });
+        pptx.layout = 'CUSTOM';
+
+        // Create off-screen container with iframe for isolated rendering
+        const renderContainer = document.createElement('div');
+        renderContainer.style.cssText = 'position:fixed; top:0; left:-2000px; width:1280px; height:720px; z-index:99999; overflow:hidden;';
+        document.body.appendChild(renderContainer);
+
+        for (let i = 0; i < TOTAL_SLIDES; i++) {
+            progressEl.textContent = `${i + 1} / ${TOTAL_SLIDES}`;
+
+            const slideUrl = getSlideUrl(i);
+            const pptSlide = pptx.addSlide();
+
+            // Load slide in iframe (same-origin via HTTP server)
+            const captureIframe = document.createElement('iframe');
+            captureIframe.style.cssText = 'width:1280px; height:720px; border:none;';
+            renderContainer.innerHTML = '';
+            renderContainer.appendChild(captureIframe);
+
+            // Wait for iframe to load
+            let loaded = false;
+            try {
+                await new Promise((resolve, reject) => {
+                    captureIframe.onload = () => { loaded = true; resolve(); };
+                    captureIframe.onerror = reject;
+                    captureIframe.src = slideUrl;
+                    // Timeout after 10s
+                    setTimeout(() => { if (!loaded) reject(new Error('timeout')); }, 10000);
+                });
+            } catch {
+                pptSlide.background = { fill: '0A192F' };
+                pptSlide.addText(`Slide ${i + 1}\n${slideLabels[i]}`, {
+                    x: 0, y: 0, w: '100%', h: '100%',
+                    fontSize: 36, color: '64748b',
+                    align: 'center', valign: 'middle',
+                    fontFace: 'Montserrat',
+                });
+                continue;
+            }
+
+            // Wait for fonts, Tailwind CSS, etc. to fully render
+            await new Promise(r => setTimeout(r, 2000));
+
+            // Capture the slide content from iframe
+            try {
+                const iframeDoc = captureIframe.contentDocument || captureIframe.contentWindow.document;
+                const slideEl = iframeDoc.querySelector('.slide-container') || iframeDoc.body;
+
+                const canvas = await html2canvas(slideEl, {
+                    width: 1280,
+                    height: 720,
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#0A192F',
+                    logging: false,
+                    onclone: function(clonedDoc) {
+                        const el = clonedDoc.querySelector('.slide-container');
+                        if (el) {
+                            el.style.width = '1280px';
+                            el.style.height = '720px';
+                            el.style.overflow = 'hidden';
+                        }
+                    }
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                pptSlide.addImage({
+                    data: imgData,
+                    x: 0, y: 0,
+                    w: 13.33, h: 7.5,
+                });
+            } catch (captureErr) {
+                console.warn(`Could not capture slide ${i + 1}:`, captureErr);
+                pptSlide.background = { fill: '0A192F' };
+                pptSlide.addText(`Slide ${i + 1}\n${slideLabels[i]}\n(Capture failed)`, {
+                    x: 0, y: 0, w: '100%', h: '100%',
+                    fontSize: 28, color: '64748b',
+                    align: 'center', valign: 'middle',
+                    fontFace: 'Montserrat',
+                });
+            }
+        }
+
+        // Clean up
+        document.body.removeChild(renderContainer);
+
+        await pptx.writeFile({ fileName: 'IMAJI_ERP_QMS_Presentation.pptx' });
+
+    } catch (err) {
+        alert('Error generating PPTX: ' + err.message);
+        console.error(err);
+    } finally {
+        loading.classList.remove('active');
+    }
+}
+
+// ===== SIDEBAR TOGGLE (mobile) =====
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarBackdrop').classList.toggle('open');
+}
+
+// Close sidebar when a slide is selected on mobile
+const origGoToSlide = goToSlide;
+goToSlide = function(index) {
+    origGoToSlide(index);
+    if (window.innerWidth <= 1024) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarBackdrop').classList.remove('open');
+    }
+};
+
+// ===== DYNAMIC SLIDE SCALING =====
+function scaleSlideFrame() {
+    const frame = document.getElementById('slideFrame');
+    if (!frame) return;
+    const frameWidth = frame.clientWidth;
+    const scale = frameWidth / 1280;
+    const iframe = document.getElementById('slideIframe');
+    if (iframe) {
+        iframe.style.transform = `scale(${scale})`;
+        iframe.style.transformOrigin = 'top left';
+        frame.style.height = (720 * scale) + 'px';
+    }
+}
+
+window.addEventListener('resize', scaleSlideFrame);
+
+// ===== TOUCH SWIPE =====
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const dx = touchEndX - touchStartX;
+    const dy = touchEndY - touchStartY;
+
+    // Only trigger if horizontal swipe is dominant and > 50px
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        const isFullscreen = document.getElementById('fullscreenOverlay').classList.contains('active');
+        if (dx < 0) {
+            // Swipe left = next
+            isFullscreen ? fullscreenNext() : nextSlide();
+        } else {
+            // Swipe right = prev
+            isFullscreen ? fullscreenPrev() : prevSlide();
+        }
+    }
+}, { passive: true });
+
+// ===== INIT =====
+initThumbnails();
+goToSlide(0);
+
+// Initial scale after DOM is ready
+requestAnimationFrame(() => {
+    scaleSlideFrame();
+});
+</script>
+
+</body>
+</html>
