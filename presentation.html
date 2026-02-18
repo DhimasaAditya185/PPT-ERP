@@ -275,15 +275,12 @@
             display: flex;
         }
 
-        .fullscreen-overlay { cursor: pointer; }
-
         .fullscreen-overlay iframe {
             width: 1280px;
             height: 720px;
             border: none;
             transform-origin: center center;
             position: absolute;
-            pointer-events: none;
             top: 50%;
             left: 50%;
         }
@@ -301,9 +298,16 @@
             padding: 10px 24px;
             border-radius: 40px;
             border: 1px solid rgba(0, 180, 216, 0.2);
-            z-index: 10001;
+            z-index: 10002;
             opacity: 0;
             transition: opacity 0.3s;
+        }
+
+        .fullscreen-click-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 10000;
+            cursor: pointer;
         }
 
         .fullscreen-overlay:hover .fullscreen-nav {
@@ -556,8 +560,9 @@
 </div>
 
 <!-- FULLSCREEN -->
-<div class="fullscreen-overlay" id="fullscreenOverlay" onclick="handleFullscreenClick(event)">
+<div class="fullscreen-overlay" id="fullscreenOverlay">
     <iframe id="fullscreenIframe" src=""></iframe>
+    <div class="fullscreen-click-layer" onclick="handleFullscreenClick(event)"></div>
     <div class="fullscreen-nav">
         <button onclick="fullscreenPrev()"><i class="fas fa-chevron-left"></i></button>
         <span class="fs-counter" id="fsCounter">1 / 19</span>
