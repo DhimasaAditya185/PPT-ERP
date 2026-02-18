@@ -312,6 +312,75 @@
             cursor: pointer;
         }
 
+        /* Rotate phone prompt - only on mobile portrait in fullscreen */
+        .rotate-prompt {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10003;
+            background: #000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            color: #fff;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .rotate-prompt .rotate-icon {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(0, 180, 216, 0.5);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: rotatePhone 2s ease-in-out infinite;
+        }
+
+        .rotate-prompt .rotate-icon i {
+            font-size: 36px;
+            color: #00B4D8;
+        }
+
+        .rotate-prompt h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .rotate-prompt p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            max-width: 280px;
+        }
+
+        @keyframes rotatePhone {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50%, 75% { transform: rotate(90deg); }
+        }
+
+        /* Show rotate prompt only on mobile portrait when fullscreen is active */
+        @media (max-width: 1024px) and (orientation: portrait) {
+            .fullscreen-overlay.active .rotate-prompt {
+                display: flex;
+            }
+            .fullscreen-overlay.active .fullscreen-click-layer,
+            .fullscreen-overlay.active .fullscreen-nav,
+            .fullscreen-overlay.active iframe {
+                display: none;
+            }
+        }
+
+        @media (orientation: landscape) {
+            .rotate-prompt {
+                display: none !important;
+            }
+        }
+
         .fullscreen-overlay:hover .fullscreen-nav {
             opacity: 1;
         }
@@ -570,6 +639,13 @@
         <span class="fs-counter" id="fsCounter">1 / 19</span>
         <button onclick="fullscreenNext()"><i class="fas fa-chevron-right"></i></button>
         <button class="fs-close" onclick="toggleFullscreen()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="rotate-prompt">
+        <div class="rotate-icon">
+            <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h3>Putar Perangkat Anda</h3>
+        <p>Rotasi HP ke landscape untuk pengalaman presentasi terbaik</p>
     </div>
 </div>
 
