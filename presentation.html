@@ -664,11 +664,20 @@ function scaleFullscreenIframe() {
 
 window.addEventListener('resize', () => {
     if (document.getElementById('fullscreenOverlay').classList.contains('active')) {
-        scaleFullscreenIframe();
+        setTimeout(scaleFullscreenIframe, 100);
     }
 });
 
-function toggleFullscreen() {
+// Re-scale on orientation change (mobile)
+if (screen.orientation) {
+    screen.orientation.addEventListener('change', () => {
+        if (document.getElementById('fullscreenOverlay').classList.contains('active')) {
+            setTimeout(scaleFullscreenIframe, 200);
+        }
+    });
+}
+
+async function toggleFullscreen() {
     const overlay = document.getElementById('fullscreenOverlay');
     const isActive = overlay.classList.contains('active');
 
@@ -677,9 +686,32 @@ function toggleFullscreen() {
         document.getElementById('fullscreenIframe').src = getSlideUrl(currentSlide);
         document.getElementById('fsCounter').textContent = `${currentSlide + 1} / ${TOTAL_SLIDES}`;
         scaleFullscreenIframe();
+        // Lock to landscape on mobile
+        try {
+            if (screen.orientation && screen.orientation.lock) {
+                await screen.orientation.lock('landscape');
+            }
+        } catch (e) { /* not supported or not in fullscreen */ }
+        // Request fullscreen API for mobile landscape
+        try {
+            const el = document.documentElement;
+            if (el.requestFullscreen) await el.requestFullscreen();
+            else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
+        } catch (e) { /* ignore */ }
     } else {
         overlay.classList.remove('active');
         document.getElementById('fullscreenIframe').src = '';
+        // Unlock orientation
+        try {
+            if (screen.orientation && screen.orientation.unlock) {
+                screen.orientation.unlock();
+            }
+        } catch (e) { /* ignore */ }
+        // Exit fullscreen
+        try {
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        } catch (e) { /* ignore */ }
     }
 }
 
