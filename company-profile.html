@@ -292,19 +292,25 @@
     </div>
 
     <script>
-        // Load PDF directly - hide placeholder, show viewer
         function loadPdf() {
-            const pdfUrl = 'company-profile.pdf?v=' + Date.now();
             const frame = document.getElementById('pdfFrame');
             const placeholder = document.getElementById('placeholder');
             const btnDownload = document.getElementById('btnDownload');
 
-            frame.src = pdfUrl;
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+            if (isMobile) {
+                // Use Google Docs Viewer for mobile (renders PDF inline without needing to click open)
+                const fullUrl = new URL('company-profile.pdf', window.location.href).href;
+                frame.src = 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(fullUrl);
+            } else {
+                frame.src = 'company-profile.pdf?v=' + Date.now();
+            }
+
             frame.style.display = 'block';
             placeholder.style.display = 'none';
             btnDownload.style.display = 'flex';
 
-            // If iframe fails to load (no PDF), show placeholder again
             frame.onerror = function() {
                 frame.style.display = 'none';
                 placeholder.style.display = 'block';
