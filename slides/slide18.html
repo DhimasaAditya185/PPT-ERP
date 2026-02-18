@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Timeline Implementasi &amp; Next Steps</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header-stripe {
+            background-color: #0A192F;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 32px;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .accent-bar {
+            background-color: #00B4D8;
+            height: 6px;
+            width: 100%;
+        }
+        .content-area {
+            flex: 1;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #F8F9FA;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #0A192F;
+            font-size: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            color: #00B4D8;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 4px;
+            background-color: #E5E7EB;
+            width: 90%;
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .timeline-track-fill {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: #00B4D8;
+            opacity: 0.3;
+        }
+
+        .timeline-nodes {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            top: -22px; /* Half of node height + half of track height */
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .timeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 200px;
+            position: relative;
+        }
+
+        .node-circle {
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            border: 3px solid #00B4D8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .timeline-node:hover .node-circle {
+            transform: scale(1.1);
+            background-color: #00B4D8;
+            color: #ffffff;
+        }
+
+        .timeline-node:hover .node-circle i {
+            color: #ffffff;
+        }
+
+        .node-circle i {
+            color: #00B4D8;
+            font-size: 16px;
+        }
+
+        .node-phase {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #00B4D8;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .node-title {
+            font-weight: 600;
+            color: #0A192F;
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .node-desc {
+            font-size: 12px;
+            color: #6B7280;
+            text-align: center;
+            line-height: 1.4;
+            background-color: #fff;
+            padding: 8px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            width: 100%;
+        }
+
+        /* Next Steps Section */
+        .next-steps-section {
+            flex: 1;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border-left: 5px solid #0A192F;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+
+        .step-card {
+            background-color: #F8FAFC;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #E5E7EB;
+            transition: transform 0.2s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-3px);
+            border-color: #00B4D8;
+            background-color: #E6F7FA;
+        }
+
+        .step-number {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            color: #E5E7EB;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .step-card:hover .step-number {
+            color: #00B4D8;
+            opacity: 0.3;
+        }
+
+        .step-content h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #0A192F;
+            font-size: 14px;
+            margin: 0 0 5px 0;
+        }
+
+        .step-content p {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .arrow-connector {
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00B4D8;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        /* Decoration */
+        .bg-dots {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            width: 100px;
+            height: 100px;
+            background-image: radial-gradient(#00B4D8 2px, transparent 2px);
+            background-size: 10px 10px;
+            opacity: 0.2;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-stripe">
+<h1 class="header-title">TIMELINE IMPLEMENTASI &amp; NEXT STEPS</h1>
+<div style="flex: 1;"></div>
+<div style="display: flex; align-items: center;">
+<span style="color: rgba(255,255,255,0.7); font-size: 14px; margin-right: 15px;">IMAJI ERP + QMS</span>
+<div style="width: 30px; height: 30px; background-color: #00B4D8; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-calendar-alt text-white text-xs"></i>
+</div>
+</div>
+</div>
+<div class="accent-bar"></div>
+<!-- Main Content -->
+<div class="content-area">
+<div class="bg-dots"></div>
+<!-- Timeline Section -->
+<div class="timeline-section">
+<h2 class="section-title"><i class="fas fa-route"></i> Roadmap Implementasi (Estimasi 8 Bulan)</h2>
+<div class="timeline-track">
+<div class="timeline-track-fill"></div>
+</div>
+<div class="timeline-nodes">
+<!-- Phase 1 -->
+<div class="timeline-node">
+<div class="node-circle">
+<i class="fas fa-search"></i>
+</div>
+<p class="node-phase">M1</p>
+<h3 class="node-title">Discovery</h3>
+<div class="node-desc">
+<p>Requirements Gathering, Process Mapping, BRD Sign-off</p>
+</div>
+</div>
+<!-- Phase 2 -->
+<div class="timeline-node">
+<div class="node-circle">
+<i class="fas fa-code"></i>
+</div>
+<p class="node-phase">M2 - M4</p>
+<h3 class="node-title">Development</h3>
+<div class="node-desc">
+<p>Iterative Dev, SIT, Sprint Demos, Initial Setup</p>
+</div>
+</div>
+<!-- Phase 3 -->
+<div class="timeline-node">
+<div class="node-circle">
+<i class="fas fa-chalkboard-teacher"></i>
+</div>
+<p class="node-phase">M5 - M6</p>
+<h3 class="node-title">Preparation</h3>
+<div class="node-desc">
+<p>UAT Prep, User Training, Production Environment Prep</p>
+</div>
+</div>
+<!-- Phase 4 -->
+<div class="timeline-node">
+<div class="node-circle">
+<i class="fas fa-rocket"></i>
+</div>
+<p class="node-phase">M7 - M8</p>
+<h3 class="node-title">Go-Live</h3>
+<div class="node-desc">
+<p>UAT, Sign-off, Data Migration, Go-Live Acceptance</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Next Steps Section -->
+<div class="next-steps-section">
+<h2 class="section-title" style="margin-bottom: 15px;"><i class="fas fa-forward"></i> Langkah Selanjutnya (Action Items)</h2>
+<div class="steps-grid">
+<!-- Step 1 -->
+<div class="step-card" style="position: relative;">
+<div class="step-number">01</div>
+<div class="step-content">
+<h4>Schedule Workshop</h4>
+<p>Discovery workshop untuk pemetaan proses &amp; kebutuhan bukti ISO.</p>
+</div>
+<div class="arrow-connector"><i class="fas fa-chevron-right"></i></div>
+</div>
+<!-- Step 2 -->
+<div class="step-card" style="position: relative;">
+<div class="step-number">02</div>
+<div class="step-content">
+<h4>Confirm Scope</h4>
+<p>Finalisasi scope Phase 1 (QC + Doc Control + Inventory/Production).</p>
+</div>
+<div class="arrow-connector"><i class="fas fa-chevron-right"></i></div>
+</div>
+<!-- Step 3 -->
+<div class="step-card" style="position: relative;">
+<div class="step-number">03</div>
+<div class="step-content">
+<h4>Demo Use-Case</h4>
+<p>Simulasi Traceability, NCR/CAPA Flow, dan Dashboard KPI.</p>
+</div>
+<div class="arrow-connector"><i class="fas fa-chevron-right"></i></div>
+</div>
+<!-- Step 4 -->
+<div class="step-card">
+<div class="step-number">04</div>
+<div class="step-content">
+<h4>Proposal &amp; Plan</h4>
+<p>Pengajuan proposal final dan rencana proyek detail.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

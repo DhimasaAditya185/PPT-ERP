@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Objectives (3 Kolom) - IMAJI ERP + QMS</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header-stripe {
+            background-color: #0A192F;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 32px;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .accent-bar {
+            background-color: #00B4D8;
+            height: 6px;
+            width: 100%;
+        }
+        .content-area {
+            flex: 1;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #F8F9FA;
+            justify-content: center;
+        }
+        .objectives-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            height: 100%;
+            align-items: stretch;
+            z-index: 10;
+        }
+        .objective-card {
+            flex: 1;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border-top: 6px solid #00B4D8;
+        }
+        .objective-card:nth-child(2) {
+            border-top-color: #0A192F;
+            transform: scale(1.05);
+            z-index: 5;
+            box-shadow: 0 15px 30px rgba(10, 25, 47, 0.1);
+        }
+        .objective-card:nth-child(3) {
+            border-top-color: #00B4D8;
+        }
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #E6F7FA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 32px;
+            color: #00B4D8;
+            box-shadow: 0 5px 15px rgba(0, 180, 216, 0.1);
+        }
+        .objective-card:nth-child(2) .icon-circle {
+            background-color: #E8EBF0;
+            color: #0A192F;
+        }
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #0A192F;
+            font-size: 20px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-desc {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .card-points {
+            margin-top: auto;
+            width: 100%;
+            text-align: left;
+        }
+        .point-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #333;
+            background-color: #F8F9FA;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        .point-item i {
+            color: #00B4D8;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        .objective-card:nth-child(2) .point-item i {
+            color: #0A192F;
+        }
+        .bg-pattern-dots {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-image: radial-gradient(#00B4D8 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .dots-tl { top: 20px; left: 20px; }
+        .dots-br { bottom: 20px; right: 20px; }
+
+        .number-watermark {
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 120px;
+            color: rgba(0,0,0,0.03);
+            line-height: 1;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-stripe">
+<h1 class="header-title">OBJECTIVES BISNIS (3 HASIL UTAMA)</h1>
+<div style="flex: 1;"></div>
+<div style="display: flex; align-items: center;">
+<span style="color: rgba(255,255,255,0.7); font-size: 14px; margin-right: 15px;">IMAJI ERP + QMS</span>
+<div style="width: 30px; height: 30px; background-color: #00B4D8; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-bullseye text-white text-xs"></i>
+</div>
+</div>
+</div>
+<div class="accent-bar"></div>
+<!-- Main Content -->
+<div class="content-area">
+<div class="bg-pattern-dots dots-tl"></div>
+<div class="bg-pattern-dots dots-br"></div>
+<div class="objectives-container">
+<!-- Objective 1 -->
+<div class="objective-card">
+<div class="number-watermark">01</div>
+<div class="icon-circle">
+<i class="fas fa-chart-line"></i>
+</div>
+<h3 class="card-title">Insight-Driven Performance Management</h3>
+<p class="card-desc">Transformasi dari data mentah menjadi wawasan strategis untuk pengambilan keputusan yang cepat dan akurat.</p>
+<div class="card-points">
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>KPI Real-time per Departemen</span>
+</div>
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>Monitoring Kinerja Mesin &amp; Tim</span>
+</div>
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>Akuntabilitas Berbasis Data</span>
+</div>
+</div>
+</div>
+<!-- Objective 2 -->
+<div class="objective-card">
+<div class="number-watermark">02</div>
+<div class="icon-circle">
+<i class="fas fa-server"></i>
+</div>
+<h3 class="card-title">Centralized Quality &amp; Compliance Repository</h3>
+<p class="card-desc">Pusat kendali dokumen dan bukti mutu yang terstruktur untuk memastikan kesiapan audit kapan saja.</p>
+<div class="card-points">
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>Document Control Terpusat</span>
+</div>
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>Versioning &amp; Approval Workflow</span>
+</div>
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>Audit Trail Lengkap (ISO 9001)</span>
+</div>
+</div>
+</div>
+<!-- Objective 3 -->
+<div class="objective-card">
+<div class="number-watermark">03</div>
+<div class="icon-circle">
+<i class="fas fa-users-cog"></i>
+</div>
+<h3 class="card-title">Quality Culture &amp; Awareness Reinforcement</h3>
+<p class="card-desc">Membangun budaya mutu yang kuat melalui keterlibatan aktif dan sistem perbaikan berkelanjutan.</p>
+<div class="card-points">
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>Pelacakan Kompetensi &amp; Awareness</span>
+</div>
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>CAPA Loop (Closed-loop Quality)</span>
+</div>
+<div class="point-item">
+<i class="fas fa-check"></i>
+<span>Sistem Perbaikan Berkelanjutan</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pain Points Manufaktur - IMAJI ERP + QMS</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header-stripe {
+            background-color: #0A192F;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 32px;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .accent-bar {
+            background-color: #EF4444; /* Red for pain points */
+            height: 6px;
+            width: 100%;
+        }
+        .content-area {
+            flex: 1;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            background-color: #F8F9FA;
+            position: relative;
+        }
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 25px;
+            height: 100%;
+            z-index: 10;
+        }
+        .pain-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            border-top: 5px solid #EF4444;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .pain-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+        }
+        .pain-icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background-color: #FEF2F2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .pain-icon {
+            color: #EF4444;
+            font-size: 24px;
+        }
+        .pain-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #0A192F;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .pain-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            flex: 1;
+        }
+        .pain-impact {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #E5E7EB;
+            font-size: 13px;
+            font-weight: 600;
+            color: #EF4444;
+            display: flex;
+            align-items: center;
+        }
+        .pain-impact i {
+            margin-right: 8px;
+        }
+        .central-graphic {
+            grid-column: 2;
+            grid-row: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #0A192F;
+            border-radius: 12px;
+            color: white;
+            position: relative;
+        }
+        .central-graphic::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px dashed #EF4444;
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .warning-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 400px;
+            color: rgba(239, 68, 68, 0.03);
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-stripe">
+<h1 class="header-title">TANTANGAN UMUM MANUFAKTUR</h1>
+<div style="flex: 1;"></div>
+<div style="display: flex; align-items: center;">
+<span style="color: rgba(255,255,255,0.7); font-size: 14px; margin-right: 15px;">IMAJI ERP + QMS</span>
+<div style="width: 30px; height: 30px; background-color: #EF4444; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-exclamation-triangle text-white text-xs"></i>
+</div>
+</div>
+</div>
+<div class="accent-bar"></div>
+<!-- Main Content -->
+<div class="content-area">
+<i class="fas fa-exclamation-circle warning-bg"></i>
+<div class="pain-grid">
+<!-- Card 1 -->
+<div class="pain-card">
+<div class="pain-icon-wrapper">
+<i class="fas fa-thumbs-down pain-icon"></i>
+</div>
+<h3 class="pain-title">Kualitas Tidak Konsisten</h3>
+<p class="pain-desc">Variasi produk tinggi, deteksi cacat terlambat, dan scrap/rework meningkat tanpa kontrol proses yang ketat.</p>
+<div class="pain-impact">
+<i class="fas fa-arrow-up"></i> Biaya Produksi Membengkak
+                    </div>
+</div>
+<!-- Card 2 -->
+<div class="pain-card">
+<div class="pain-icon-wrapper">
+<i class="fas fa-search-minus pain-icon"></i>
+</div>
+<h3 class="pain-title">Traceability Lemah</h3>
+<p class="pain-desc">Sulit menelusuri riwayat lot/serial number dari bahan baku hingga produk jadi saat terjadi komplain pelanggan.</p>
+<div class="pain-impact">
+<i class="fas fa-clock"></i> Investigasi Lambat &amp; Risiko Recall
+                    </div>
+</div>
+<!-- Card 3 -->
+<div class="pain-card">
+<div class="pain-icon-wrapper">
+<i class="fas fa-file-invoice pain-icon"></i>
+</div>
+<h3 class="pain-title">Dokumen Mutu Tersebar</h3>
+<p class="pain-desc">SOP, instruksi kerja, dan bukti audit (evidence) tersimpan manual atau terpisah-pisah dalam spreadsheet/folder.</p>
+<div class="pain-impact">
+<i class="fas fa-times-circle"></i> Kesulitan Audit &amp; Kepatuhan
+                    </div>
+</div>
+<!-- Card 4 -->
+<div class="pain-card">
+<div class="pain-icon-wrapper">
+<i class="fas fa-chart-line pain-icon" style="transform: scaleY(-1);"></i>
+</div>
+<h3 class="pain-title">KPI Tidak Real-time</h3>
+<p class="pain-desc">Laporan kinerja produksi dan kualitas baru tersedia di akhir bulan, menghambat tindakan korektif segera.</p>
+<div class="pain-impact">
+<i class="fas fa-stopwatch"></i> Keputusan Terlambat
+                    </div>
+</div>
+<!-- Center Graphic -->
+<div class="central-graphic">
+<i class="fas fa-ban text-red-500 text-4xl mb-3"></i>
+<h3 class="font-montserrat font-bold text-xl mb-1">DAMPAK BISNIS</h3>
+<p class="text-sm text-gray-300 px-4">Inefisiensi operasional dan risiko kehilangan kepercayaan pelanggan</p>
+</div>
+<!-- Card 5 -->
+<div class="pain-card">
+<div class="pain-icon-wrapper">
+<i class="fas fa-project-diagram pain-icon"></i>
+</div>
+<h3 class="pain-title">Integrasi Lemah (Silo)</h3>
+<p class="pain-desc">Departemen Purchasing, Inventory, Produksi, dan Finance bekerja dengan data yang tidak sinkron.</p>
+<div class="pain-impact">
+<i class="fas fa-random"></i> Miskomunikasi &amp; Data Ganda
+                    </div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

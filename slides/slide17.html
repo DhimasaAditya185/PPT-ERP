@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Battlecard Kompetitor - IMAJI ERP + QMS</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header-stripe {
+            background-color: #0A192F;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 32px;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .accent-bar {
+            background-color: #00B4D8;
+            height: 6px;
+            width: 100%;
+        }
+        .content-area {
+            flex: 1;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #F8F9FA;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .battlecard-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            gap: 25px;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .competitor-col {
+            flex: 1;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .competitor-col:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .competitor-col.imaji {
+            border: 2px solid #00B4D8;
+            transform: scale(1.02);
+            z-index: 5;
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.15);
+        }
+
+        .col-header {
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .imaji .col-header {
+            background-color: #E6F7FA;
+            border-bottom: 1px solid #00B4D8;
+        }
+
+        .competitor-logo {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            color: #555;
+        }
+
+        .logo-sap { color: #008FD3; }
+        .logo-odoo { color: #714B67; }
+        .logo-imaji { color: #0A192F; }
+
+        .positioning-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: #F3F4F6;
+            color: #6B7280;
+        }
+
+        .imaji .positioning-tag {
+            background-color: #00B4D8;
+            color: #ffffff;
+        }
+
+        .col-body {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-group {
+            margin-bottom: 20px;
+        }
+
+        .group-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #9CA3AF;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .check-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #4B5563;
+            line-height: 1.4;
+        }
+
+        .check-icon {
+            margin-right: 10px;
+            margin-top: 3px;
+            font-size: 14px;
+        }
+
+        .imaji .check-icon { color: #00B4D8; }
+        .sap .check-icon { color: #008FD3; }
+        .odoo .check-icon { color: #714B67; }
+
+        .col-footer {
+            padding: 20px 25px;
+            background-color: #F9FAFB;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .imaji .col-footer {
+            background-color: #0A192F;
+            color: #ffffff;
+        }
+
+        .verdict-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            opacity: 0.7;
+        }
+
+        .verdict-text {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .best-choice-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #00B4D8;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 15px;
+            border-bottom-left-radius: 10px;
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-stripe">
+<h1 class="header-title">KOMPETITOR ANALYSIS (MANUFACTURING)</h1>
+<div style="flex: 1;"></div>
+<div style="display: flex; align-items: center;">
+<span style="color: rgba(255,255,255,0.7); font-size: 14px; margin-right: 15px;">IMAJI ERP + QMS</span>
+<div style="width: 30px; height: 30px; background-color: #00B4D8; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-balance-scale text-white text-xs"></i>
+</div>
+</div>
+</div>
+<div class="accent-bar"></div>
+<!-- Main Content -->
+<div class="content-area">
+<div class="battlecard-container">
+<!-- SAP Business One -->
+<div class="competitor-col sap">
+<div class="col-header">
+<div class="competitor-logo logo-sap"><i class="fas fa-cube mr-2"></i> SAP B1</div>
+<span class="positioning-tag">Global ERP for SMB</span>
+</div>
+<div class="col-body">
+<div class="feature-group">
+<p class="group-title">Kekuatan Utama</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-check check-icon"></i> Brand global &amp; ekosistem partner luas</li>
+<li class="check-item"><i class="fas fa-check check-icon"></i> Core Finance &amp; Accounting sangat kuat</li>
+<li class="check-item"><i class="fas fa-check check-icon"></i> Stabil untuk proses standar</li>
+</ul>
+</div>
+<div class="feature-group">
+<p class="group-title">Fitur Manufaktur</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-cog check-icon"></i> Production Management (BOM, MRP)</li>
+<li class="check-item"><i class="fas fa-cog check-icon"></i> QC &amp; Shopfloor via Add-on</li>
+</ul>
+</div>
+<div class="feature-group">
+<p class="group-title">Tantangan</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-exclamation-circle check-icon" style="color:#EF4444"></i> Biaya lisensi &amp; implementasi tinggi</li>
+<li class="check-item"><i class="fas fa-exclamation-circle check-icon" style="color:#EF4444"></i> Kustomisasi lokal kompleks &amp; mahal</li>
+</ul>
+</div>
+</div>
+<div class="col-footer">
+<p class="verdict-title">VERDICT</p>
+<p class="verdict-text">Pilihan aman jika budget besar &amp; proses standar global.</p>
+</div>
+</div>
+<!-- IMAJI ERP -->
+<div class="competitor-col imaji">
+<div class="best-choice-badge">REKOMENDASI</div>
+<div class="col-header">
+<div class="competitor-logo logo-imaji"><i class="fas fa-layer-group mr-2"></i> IMAJI ERP</div>
+<span class="positioning-tag">Local Fit + ISO Oriented</span>
+</div>
+<div class="col-body">
+<div class="feature-group">
+<p class="group-title">Kekuatan Utama</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-check check-icon"></i> <strong>Kustomisasi Lokal &amp; Cepat (3-6 bln)</strong></li>
+<li class="check-item"><i class="fas fa-check check-icon"></i> <strong>Audit-Ready (NCR, CAPA, Doc Control)</strong></li>
+<li class="check-item"><i class="fas fa-check check-icon"></i> Tanpa biaya lisensi per-modul mahal</li>
+</ul>
+</div>
+<div class="feature-group">
+<p class="group-title">Fitur Manufaktur</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-cog check-icon"></i> Integrated BOM, MRP, MPS, WO</li>
+<li class="check-item"><i class="fas fa-cog check-icon"></i> <strong>Native CMMS &amp; QC Integration</strong></li>
+</ul>
+</div>
+<div class="feature-group">
+<p class="group-title">Winning Factor</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-star check-icon"></i> Kepatuhan ISO 9001 Built-in</li>
+<li class="check-item"><i class="fas fa-star check-icon"></i> Fleksibilitas proses pabrik Indonesia</li>
+</ul>
+</div>
+</div>
+<div class="col-footer">
+<p class="verdict-title" style="color: #00B4D8;">VERDICT</p>
+<p class="verdict-text">Solusi terbaik untuk manufaktur lokal yang butuh kepatuhan ISO, kecepatan, dan efisiensi biaya.</p>
+</div>
+</div>
+<!-- Odoo -->
+<div class="competitor-col odoo">
+<div class="col-header">
+<div class="competitor-logo logo-odoo"><i class="fas fa-circle-notch mr-2"></i> Odoo</div>
+<span class="positioning-tag">Modular &amp; Modern Suite</span>
+</div>
+<div class="col-body">
+<div class="feature-group">
+<p class="group-title">Kekuatan Utama</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-check check-icon"></i> Sangat modular &amp; UI modern</li>
+<li class="check-item"><i class="fas fa-check check-icon"></i> Ekosistem aplikasi luas</li>
+<li class="check-item"><i class="fas fa-check check-icon"></i> Pricing transparan per user</li>
+</ul>
+</div>
+<div class="feature-group">
+<p class="group-title">Fitur Manufaktur</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-cog check-icon"></i> Strong Planning &amp; Shopfloor App</li>
+<li class="check-item"><i class="fas fa-cog check-icon"></i> PLM &amp; Maintenance terintegrasi</li>
+</ul>
+</div>
+<div class="feature-group">
+<p class="group-title">Tantangan</p>
+<ul class="check-list">
+<li class="check-item"><i class="fas fa-exclamation-circle check-icon" style="color:#EF4444"></i> Risiko "custom creep" tanpa governance</li>
+<li class="check-item"><i class="fas fa-exclamation-circle check-icon" style="color:#EF4444"></i> Support lokal bervariasi (tergantung partner)</li>
+</ul>
+</div>
+</div>
+<div class="col-footer">
+<p class="verdict-title">VERDICT</p>
+<p class="verdict-text">Kuat di fitur tapi butuh disiplin implementasi tinggi.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

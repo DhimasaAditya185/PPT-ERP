@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ringkasan Eksekutif - IMAJI ERP + QMS</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header-stripe {
+            background-color: #0A192F;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 32px;
+            letter-spacing: 1px;
+        }
+        .accent-bar {
+            background-color: #00B4D8;
+            height: 6px;
+            width: 100%;
+        }
+        .content-area {
+            flex: 1;
+            padding: 50px 60px;
+            display: flex;
+            position: relative;
+        }
+        .left-panel {
+            flex: 0 0 65%;
+            padding-right: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .right-panel {
+            flex: 0 0 35%;
+            background-color: #F8F9FA;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #E9ECEF;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .value-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #00B4D8;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        .value-icon {
+            flex: 0 0 60px;
+            height: 60px;
+            background-color: #E6F7FA;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: #00B4D8;
+            font-size: 24px;
+        }
+        .value-text h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #0A192F;
+            font-size: 20px;
+            margin: 0 0 5px 0;
+        }
+        .value-text p {
+            color: #555;
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.5;
+        }
+        .highlight-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .highlight-number {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 64px;
+            color: #00B4D8;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .highlight-label {
+            font-weight: 600;
+            color: #0A192F;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .highlight-desc {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .watermark {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.05;
+            font-size: 120px;
+            color: #0A192F;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            opacity: 0.03;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-stripe">
+<h1 class="header-title">RINGKASAN EKSEKUTIF</h1>
+<div style="flex: 1;"></div>
+<div style="display: flex; align-items: center;">
+<span style="color: rgba(255,255,255,0.7); font-size: 14px; margin-right: 15px;">IMAJI ERP + QMS</span>
+<div style="width: 30px; height: 30px; background-color: #00B4D8; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-chart-pie text-white text-xs"></i>
+</div>
+</div>
+</div>
+<div class="accent-bar"></div>
+<!-- Main Content -->
+<div class="content-area">
+<svg class="bg-pattern" fill="none" stroke="#0A192F" stroke-width="0.5" viewbox="0 0 100 100">
+<path d="M0 0 L100 100 M20 0 L100 80 M40 0 L100 60 M60 0 L100 40 M80 0 L100 20 M0 20 L80 100 M0 40 L60 100 M0 60 L40 100 M0 80 L20 100"></path>
+</svg>
+<!-- Left Panel: Key Value Points -->
+<div class="left-panel z-10">
+<div class="value-item">
+<div class="value-icon">
+<i class="fas fa-layer-group"></i>
+</div>
+<div class="value-text">
+<h3>Satu Platform Terintegrasi</h3>
+<p>Menggabungkan kendali operasional (ERP) dan kepatuhan mutu (QMS) dalam satu ekosistem data terpusat.</p>
+</div>
+</div>
+<div class="value-item">
+<div class="value-icon">
+<i class="fas fa-eye"></i>
+</div>
+<div class="value-text">
+<h3>Visibilitas Real-time</h3>
+<p>KPI lintas fungsi (produksi, inventaris, keuangan, kualitas) tersedia instan untuk pengambilan keputusan cepat.</p>
+</div>
+</div>
+<div class="value-item">
+<div class="value-icon">
+<i class="fas fa-certificate"></i>
+</div>
+<div class="value-text">
+<h3>ISO 9001-Ready</h3>
+<p>Fitur bawaan untuk dokumentasi mutu, audit trail lengkap, NCR/CAPA, dan kontrol dokumen terstruktur.</p>
+</div>
+</div>
+</div>
+<!-- Right Panel: Implementation & Support -->
+<div class="right-panel z-10">
+<div class="highlight-box">
+<div class="highlight-number">3-6</div>
+<div class="highlight-label">Bulan</div>
+<p class="highlight-desc">Implementasi Cepat &amp; Pragmatis</p>
+</div>
+<div style="width: 80%; height: 1px; background-color: #E9ECEF; margin: 20px 0;"></div>
+<div class="w-full">
+<div class="flex items-center mb-6">
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 text-blue-600">
+<i class="fas fa-map-marker-alt"></i>
+</div>
+<div>
+<h4 class="font-bold text-navy text-lg m-0">Dukungan Lokal</h4>
+<p class="text-sm text-gray-600 m-0">Tim support Indonesia</p>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-4 text-blue-600">
+<i class="fas fa-cogs"></i>
+</div>
+<div>
+<h4 class="font-bold text-navy text-lg m-0">Kustomisasi</h4>
+<p class="text-sm text-gray-600 m-0">Sesuai proses pabrik</p>
+</div>
+</div>
+</div>
+<div class="mt-8 bg-white p-4 rounded-lg border border-gray-200 w-full text-center shadow-sm">
+<p class="text-xs text-gray-500 uppercase tracking-widest mb-2 font-semibold">Outcome Bisnis</p>
+<div class="flex justify-between text-center">
+<div>
+<i class="fas fa-arrow-down text-green-500 mb-1"></i>
+<p class="text-xs font-bold text-navy m-0">Biaya</p>
+</div>
+<div>
+<i class="fas fa-arrow-down text-green-500 mb-1"></i>
+<p class="text-xs font-bold text-navy m-0">Lead Time</p>
+</div>
+<div>
+<i class="fas fa-check-circle text-blue-500 mb-1"></i>
+<p class="text-xs font-bold text-navy m-0">Audit Ready</p>
+</div>
+</div>
+</div>
+</div>
+<i class="fas fa-file-contract watermark"></i>
+</div>
+</div>
+</body>
+</html>

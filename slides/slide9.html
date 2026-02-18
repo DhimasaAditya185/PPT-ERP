@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QMS Key Capabilities - IMAJI ERP + QMS</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header-stripe {
+            background-color: #0A192F;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 32px;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .accent-bar {
+            background-color: #00B4D8;
+            height: 6px;
+            width: 100%;
+        }
+        .content-area {
+            flex: 1;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #F8F9FA;
+            align-items: center;
+            justify-content: center;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 30px;
+            width: 100%;
+            height: 100%;
+        }
+        .capability-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            border-left: 5px solid #00B4D8;
+            transition: transform 0.2s;
+        }
+        .capability-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.08);
+        }
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            background-color: #E6F7FA;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 25px;
+            flex-shrink: 0;
+        }
+        .icon-box i {
+            color: #00B4D8;
+            font-size: 32px;
+        }
+        .card-content {
+            flex: 1;
+        }
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #0A192F;
+            font-size: 20px;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+        .feature-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .feature-item i {
+            color: #00B4D8;
+            margin-right: 10px;
+            margin-top: 4px;
+            font-size: 12px;
+        }
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background-image: radial-gradient(#0A192F 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .number-bg {
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 60px;
+            color: rgba(0,0,0,0.03);
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-stripe">
+<h1 class="header-title">QMS KEY CAPABILITIES</h1>
+<div style="flex: 1;"></div>
+<div style="display: flex; align-items: center;">
+<span style="color: rgba(255,255,255,0.7); font-size: 14px; margin-right: 15px;">IMAJI ERP + QMS</span>
+<div style="width: 30px; height: 30px; background-color: #00B4D8; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-key text-white text-xs"></i>
+</div>
+</div>
+</div>
+<div class="accent-bar"></div>
+<!-- Main Content -->
+<div class="content-area">
+<div class="bg-pattern"></div>
+<div class="grid-container relative z-10">
+<!-- Capability 1 -->
+<div class="capability-card">
+<div class="number-bg">01</div>
+<div class="icon-box">
+<i class="fas fa-map-marker-alt"></i>
+</div>
+<div class="card-content">
+<h3 class="card-title">Control Points Integration</h3>
+<ul class="feature-list">
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Pemicu inspeksi otomatis pada setiap tahap proses (Incoming, In-Process, Outgoing).</span>
+</li>
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Integrasi langsung dengan scanner barcode/QR di lantai produksi.</span>
+</li>
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Mencegah proses lanjut sebelum lolos QC (Quality Gate).</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Capability 2 -->
+<div class="capability-card">
+<div class="number-bg">02</div>
+<div class="icon-box">
+<i class="fas fa-list-ol"></i>
+</div>
+<div class="card-content">
+<h3 class="card-title">Flexible Quality Rules</h3>
+<ul class="feature-list">
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Definisi instruksi per produk/kategori: Wajib, Review, atau Opsional.</span>
+</li>
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Mendukung jenis pemeriksaan: Pass/Fail, Pengukuran (Measure), atau Visual.</span>
+</li>
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Sampling plan otomatis (AQL) sesuai standar ISO.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Capability 3 -->
+<div class="capability-card">
+<div class="number-bg">03</div>
+<div class="icon-box">
+<i class="fas fa-robot"></i>
+</div>
+<div class="card-content">
+<h3 class="card-title">Automated Actions</h3>
+<ul class="feature-list">
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Workflow otomatis untuk barang gagal: Scrap, Return to Vendor, atau Rework.</span>
+</li>
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Manajemen karantina (Quarantine) terisolasi sistemik.</span>
+</li>
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Pemicu pembuatan NCR (Non-Conformance Report) instan.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Capability 4 -->
+<div class="capability-card">
+<div class="number-bg">04</div>
+<div class="icon-box">
+<i class="fas fa-chart-pie"></i>
+</div>
+<div class="card-content">
+<h3 class="card-title">Real-time Dashboard &amp; Reports</h3>
+<ul class="feature-list">
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Analisis tren cacat (Pareto Analysis) untuk identifikasi akar masalah.</span>
+</li>
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Monitoring kepatuhan inspeksi tim QC secara real-time.</span>
+</li>
+<li class="feature-item">
+<i class="fas fa-check"></i>
+<span>Laporan performa kualitas pemasok (Vendor Rating).</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

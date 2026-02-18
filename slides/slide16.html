@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ISO 9001 Mapping - IMAJI ERP + QMS</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header-stripe {
+            background-color: #0A192F;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 30px;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .accent-bar {
+            background-color: #00B4D8;
+            height: 6px;
+            width: 100%;
+        }
+        .content-area {
+            flex: 1;
+            padding: 20px 50px 16px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #F8F9FA;
+        }
+
+        .table-container {
+            width: 100%;
+            flex: 1;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            table-layout: fixed;
+        }
+
+        thead {
+            background-color: #0A192F;
+            color: #ffffff;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border-bottom: 3px solid #00B4D8;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        tbody tr:hover {
+            background-color: #E6F7FA;
+        }
+
+        td {
+            padding: 9px 16px;
+            color: #333;
+            vertical-align: middle;
+        }
+
+        .module-cell {
+            font-weight: 600;
+            color: #0A192F;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .module-icon {
+            width: 28px;
+            height: 28px;
+            background-color: #E6F7FA;
+            color: #00B4D8;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .clause-tag {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 6px;
+            margin-bottom: 3px;
+        }
+
+        .clause-badge {
+            background-color: #00B4D8;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 4px;
+            white-space: nowrap;
+        }
+
+        .clause-desc {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .support-clause {
+            color: #6B7280;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .bottom-note {
+            margin-top: 10px;
+            background-color: #E6F7FA;
+            border-left: 4px solid #00B4D8;
+            border-radius: 0 8px 8px 0;
+            padding: 8px 16px;
+            font-size: 12px;
+            color: #005f73;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .bottom-note i {
+            margin-right: 8px;
+            font-size: 14px;
+            color: #00B4D8;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header-stripe">
+<h1 class="header-title">ISO 9001:2015 — MAPPING MODUL → KLAUSUL</h1>
+<div style="flex: 1;"></div>
+<div style="display: flex; align-items: center;">
+<span style="color: rgba(255,255,255,0.7); font-size: 14px; margin-right: 15px;">IMAJI ERP + QMS</span>
+<div style="width: 30px; height: 30px; background-color: #00B4D8; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+<i class="fas fa-certificate text-white text-xs"></i>
+</div>
+</div>
+</div>
+<div class="accent-bar"></div>
+<!-- Main Content -->
+<div class="content-area">
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="width: 22%;">Modul ERP</th>
+<th style="width: 43%;">Primary Clauses (Inti)</th>
+<th style="width: 35%;">Supporting Clauses (Pendukung)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<div class="module-cell">
+<div class="module-icon"><i class="fas fa-check-double"></i></div>
+<span>Quality Control</span>
+</div>
+</td>
+<td>
+<span class="clause-tag"><span class="clause-badge">8.6</span><span class="clause-desc">Release of Products</span></span>
+<span class="clause-tag"><span class="clause-badge">8.7</span><span class="clause-desc">Nonconforming Outputs</span></span>
+<span class="clause-tag"><span class="clause-badge">10.2</span><span class="clause-desc">NCR &amp; CAPA</span></span>
+</td>
+<td class="support-clause">7.1.5 Monitoring Resources, 9.1 Monitoring &amp; Measurement</td>
+</tr>
+<tr>
+<td>
+<div class="module-cell">
+<div class="module-icon"><i class="fas fa-folder-open"></i></div>
+<span>Document Control</span>
+</div>
+</td>
+<td>
+<span class="clause-tag"><span class="clause-badge">7.5</span><span class="clause-desc">Documented Information</span></span>
+</td>
+<td class="support-clause">4.4 QMS Processes, 5.2 Quality Policy, 9.2 Internal Audit</td>
+</tr>
+<tr>
+<td>
+<div class="module-cell">
+<div class="module-icon"><i class="fas fa-industry"></i></div>
+<span>Production</span>
+</div>
+</td>
+<td>
+<span class="clause-tag"><span class="clause-badge">8.5</span><span class="clause-desc">Production Provision</span></span>
+<span class="clause-tag"><span class="clause-badge">8.1</span><span class="clause-desc">Operational Planning</span></span>
+</td>
+<td class="support-clause">8.5.2 Identification &amp; Traceability, 8.5.6 Control of Changes</td>
+</tr>
+<tr>
+<td>
+<div class="module-cell">
+<div class="module-icon"><i class="fas fa-shopping-cart"></i></div>
+<span>Purchasing</span>
+</div>
+</td>
+<td>
+<span class="clause-tag"><span class="clause-badge">8.4</span><span class="clause-desc">Externally Provided Processes</span></span>
+</td>
+<td class="support-clause">8.4.1 Evaluation, 8.4.2 Type &amp; Extent of Control</td>
+</tr>
+<tr>
+<td>
+<div class="module-cell">
+<div class="module-icon"><i class="fas fa-handshake"></i></div>
+<span>CRM</span>
+</div>
+</td>
+<td>
+<span class="clause-tag"><span class="clause-badge">8.2</span><span class="clause-desc">Requirements for Products</span></span>
+<span class="clause-tag"><span class="clause-badge">9.1.2</span><span class="clause-desc">Customer Satisfaction</span></span>
+</td>
+<td class="support-clause">5.1.2 Customer Focus, 10.2 Customer Complaints</td>
+</tr>
+<tr>
+<td>
+<div class="module-cell">
+<div class="module-icon"><i class="fas fa-boxes"></i></div>
+<span>Inventory</span>
+</div>
+</td>
+<td>
+<span class="clause-tag"><span class="clause-badge">8.5.2</span><span class="clause-desc">Identification &amp; Traceability</span></span>
+<span class="clause-tag"><span class="clause-badge">8.5.4</span><span class="clause-desc">Preservation</span></span>
+</td>
+<td class="support-clause">7.1.3 Infrastructure, 7.1.4 Environment for Operation</td>
+</tr>
+<tr>
+<td>
+<div class="module-cell">
+<div class="module-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+<span>Sales</span>
+</div>
+</td>
+<td>
+<span class="clause-tag"><span class="clause-badge">8.2.3</span><span class="clause-desc">Review of Requirements</span></span>
+</td>
+<td class="support-clause">8.2.1 Customer Communication, 8.2.4 Changes to Requirements</td>
+</tr>
+<tr>
+<td>
+<div class="module-cell">
+<div class="module-icon"><i class="fas fa-users-cog"></i></div>
+<span>Talent Mgmt</span>
+</div>
+</td>
+<td>
+<span class="clause-tag"><span class="clause-badge">7.2</span><span class="clause-desc">Competence</span></span>
+<span class="clause-tag"><span class="clause-badge">7.3</span><span class="clause-desc">Awareness</span></span>
+</td>
+<td class="support-clause">5.3 Roles &amp; Responsibilities, 7.1.2 People</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bottom-note">
+<i class="fas fa-info-circle"></i>
+<span><strong>Rekomendasi:</strong> Lakukan workshop "Clause-to-Screen" untuk memetakan bukti audit spesifik di setiap modul sesuai prosedur perusahaan Anda.</span>
+</div>
+</div>
+</div>
+</body>
+</html>
