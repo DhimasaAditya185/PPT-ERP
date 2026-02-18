@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>IMAJI ERP + QMS - Presentation Viewer</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -532,6 +535,7 @@
 
         <div class="slide-frame" id="slideFrame">
             <iframe id="slideIframe" src="slides/slide1.html"></iframe>
+            <script>document.getElementById('slideIframe').src = 'slides/slide1.html?v=' + Date.now();</script>
         </div>
 
         <button class="nav-arrow next" id="btnNext" onclick="nextSlide()">
@@ -603,7 +607,7 @@ function initThumbnails() {
 }
 
 function getSlideUrl(index) {
-    return `slides/slide${index + 1}.html`;
+    return `slides/slide${index + 1}.html?v=${Date.now()}`;
 }
 
 function goToSlide(index) {
