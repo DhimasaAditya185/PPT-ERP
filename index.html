@@ -374,6 +374,20 @@
             font-weight: 600;
         }
 
+        /* ===== SIDEBAR TOGGLE ===== */
+        .sidebar-toggle {
+            display: none;
+            width: 40px; height: 40px;
+            background: rgba(0, 180, 216, 0.15);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 8px;
+            color: #00B4D8;
+            font-size: 16px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1400px) {
             .slide-frame { width: 800px; height: 450px; }
@@ -385,6 +399,99 @@
             .slide-frame iframe { transform: scale(0.5); }
             .sidebar { width: 180px; }
         }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .toolbar { padding: 0 16px; }
+            .toolbar-title { font-size: 13px; }
+            .btn span.btn-label { display: none; }
+            .btn { padding: 8px 12px; }
+
+            .sidebar-toggle { display: flex; }
+
+            .sidebar {
+                position: fixed;
+                top: 56px;
+                left: 0;
+                bottom: 0;
+                width: 200px;
+                z-index: 90;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                background: rgba(10, 25, 47, 0.95);
+                backdrop-filter: blur(12px);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                top: 56px;
+                background: rgba(0,0,0,0.5);
+                z-index: 89;
+            }
+
+            .sidebar-backdrop.open { display: block; }
+
+            .preview-area { padding: 16px; }
+            .slide-frame { width: 100%; max-width: 640px; height: auto; aspect-ratio: 16/9; }
+            .slide-frame iframe { transform: scale(0.5); }
+            .nav-arrow { width: 40px; height: 40px; font-size: 16px; }
+            .nav-arrow.prev { left: 8px; }
+            .nav-arrow.next { right: 8px; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .toolbar { height: 48px; padding: 0 12px; gap: 8px; }
+            .toolbar-left { gap: 8px; }
+            .toolbar-logo { width: 32px; height: 32px; }
+            .toolbar-logo i { font-size: 14px; }
+            .toolbar-title { display: none; }
+            .slide-counter { font-size: 11px; padding: 3px 8px; }
+
+            .btn { padding: 6px 10px; font-size: 12px; gap: 4px; border-radius: 6px; }
+
+            .main-container { height: calc(100vh - 48px); margin-top: 48px; }
+            .sidebar { top: 48px; }
+            .sidebar-backdrop { top: 48px; }
+
+            .preview-area { padding: 10px 8px; }
+            .slide-frame {
+                width: calc(100vw - 80px);
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 16/9;
+                border-radius: 4px;
+            }
+            .slide-frame iframe {
+                transform-origin: top left;
+            }
+
+            .nav-arrow { width: 32px; height: 32px; font-size: 14px; }
+            .nav-arrow.prev { left: 4px; }
+            .nav-arrow.next { right: 4px; }
+
+            .fullscreen-nav {
+                bottom: 12px;
+                padding: 8px 16px;
+                gap: 12px;
+            }
+            .fullscreen-nav button { width: 32px; height: 32px; font-size: 12px; }
+            .fullscreen-nav .fs-counter { font-size: 11px; min-width: 50px; }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .btn-present .btn-label,
+            .btn-download .btn-label { display: none; }
+            .btn { padding: 8px; min-width: 36px; justify-content: center; }
+            .slide-frame { width: calc(100vw - 60px); }
+        }
     </style>
 </head>
 <body>
@@ -392,19 +499,25 @@
 <!-- TOOLBAR -->
 <div class="toolbar">
     <div class="toolbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="toolbar-logo"><i class="fas fa-cube"></i></div>
         <span class="toolbar-title">IMAJI ERP + QMS Presentation</span>
         <span class="slide-counter" id="slideCounter">Slide 1 / 19</span>
     </div>
     <div class="toolbar-right">
         <button class="btn btn-present" onclick="toggleFullscreen()" title="Present (F5)">
-            <i class="fas fa-play"></i> Present
+            <i class="fas fa-play"></i> <span class="btn-label">Present</span>
         </button>
         <button class="btn btn-download" onclick="exportToPPTX()">
-            <i class="fas fa-download"></i> Download PPTX
+            <i class="fas fa-download"></i> <span class="btn-label">Download PPTX</span>
         </button>
     </div>
 </div>
+
+<!-- SIDEBAR BACKDROP (mobile) -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
 
 <!-- MAIN LAYOUT -->
 <div class="main-container">
@@ -715,9 +828,74 @@ async function exportToPPTX() {
     }
 }
 
+// ===== SIDEBAR TOGGLE (mobile) =====
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarBackdrop').classList.toggle('open');
+}
+
+// Close sidebar when a slide is selected on mobile
+const origGoToSlide = goToSlide;
+goToSlide = function(index) {
+    origGoToSlide(index);
+    if (window.innerWidth <= 1024) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarBackdrop').classList.remove('open');
+    }
+};
+
+// ===== DYNAMIC SLIDE SCALING =====
+function scaleSlideFrame() {
+    const frame = document.getElementById('slideFrame');
+    if (!frame) return;
+    const frameWidth = frame.clientWidth;
+    const scale = frameWidth / 1280;
+    const iframe = document.getElementById('slideIframe');
+    if (iframe) {
+        iframe.style.transform = `scale(${scale})`;
+        iframe.style.transformOrigin = 'top left';
+        frame.style.height = (720 * scale) + 'px';
+    }
+}
+
+window.addEventListener('resize', scaleSlideFrame);
+
+// ===== TOUCH SWIPE =====
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const dx = touchEndX - touchStartX;
+    const dy = touchEndY - touchStartY;
+
+    // Only trigger if horizontal swipe is dominant and > 50px
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        const isFullscreen = document.getElementById('fullscreenOverlay').classList.contains('active');
+        if (dx < 0) {
+            // Swipe left = next
+            isFullscreen ? fullscreenNext() : nextSlide();
+        } else {
+            // Swipe right = prev
+            isFullscreen ? fullscreenPrev() : prevSlide();
+        }
+    }
+}, { passive: true });
+
 // ===== INIT =====
 initThumbnails();
 goToSlide(0);
+
+// Initial scale after DOM is ready
+requestAnimationFrame(() => {
+    scaleSlideFrame();
+});
 </script>
 
 </body>
