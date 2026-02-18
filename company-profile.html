@@ -290,25 +290,24 @@
     </div>
 
     <script>
-        // Try to load company-profile.pdf automatically
-        function tryLoadDefaultPdf() {
+        // Load PDF directly - hide placeholder, show viewer
+        function loadPdf() {
             const pdfUrl = 'company-profile.pdf?v=' + Date.now();
-            fetch(pdfUrl, { method: 'HEAD' })
-                .then(response => {
-                    if (response.ok) {
-                        const frame = document.getElementById('pdfFrame');
-                        const placeholder = document.getElementById('placeholder');
-                        const btnDownload = document.getElementById('btnDownload');
+            const frame = document.getElementById('pdfFrame');
+            const placeholder = document.getElementById('placeholder');
+            const btnDownload = document.getElementById('btnDownload');
 
-                        frame.src = pdfUrl;
-                        frame.style.display = 'block';
-                        placeholder.style.display = 'none';
-                        btnDownload.style.display = 'flex';
-                    }
-                })
-                .catch(() => {
-                    // PDF not found, show coming soon placeholder
-                });
+            frame.src = pdfUrl;
+            frame.style.display = 'block';
+            placeholder.style.display = 'none';
+            btnDownload.style.display = 'flex';
+
+            // If iframe fails to load (no PDF), show placeholder again
+            frame.onerror = function() {
+                frame.style.display = 'none';
+                placeholder.style.display = 'block';
+                btnDownload.style.display = 'none';
+            };
         }
 
         function downloadPdf() {
@@ -318,8 +317,7 @@
             a.click();
         }
 
-        // Try loading default PDF on page load
-        tryLoadDefaultPdf();
+        loadPdf();
     </script>
 </body>
 </html>
