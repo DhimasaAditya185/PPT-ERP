@@ -144,12 +144,23 @@
             animation: fadeIn 0.6s ease;
         }
 
+        .placeholder-logo {
+            margin-bottom: 30px;
+        }
+
+        .placeholder-logo img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.15;
+        }
+
         .placeholder-icon {
-            width: 120px;
-            height: 120px;
-            border-radius: 28px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px dashed rgba(255, 255, 255, 0.1);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(0, 180, 216, 0.06);
+            border: 2px solid rgba(0, 180, 216, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -157,73 +168,60 @@
         }
 
         .placeholder-icon i {
-            font-size: 48px;
-            color: rgba(255, 255, 255, 0.15);
+            font-size: 40px;
+            color: rgba(0, 180, 216, 0.4);
         }
 
         .placeholder h2 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 24px;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 12px;
+            font-size: 28px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 8px;
         }
 
-        .placeholder p {
+        .placeholder .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #00B4D8;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .placeholder .desc {
             font-size: 15px;
             color: rgba(255, 255, 255, 0.35);
-            max-width: 420px;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            max-width: 400px;
+            line-height: 1.7;
+            margin: 0 auto 35px;
         }
 
-        .upload-area {
-            border: 2px dashed rgba(0, 180, 216, 0.3);
-            border-radius: 16px;
-            padding: 30px 40px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(0, 180, 216, 0.03);
-        }
-
-        .upload-area:hover {
-            border-color: rgba(0, 180, 216, 0.6);
-            background: rgba(0, 180, 216, 0.06);
-        }
-
-        .upload-area i {
-            font-size: 24px;
-            color: #00B4D8;
-            margin-bottom: 10px;
-        }
-
-        .upload-area p {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            margin: 0;
-        }
-
-        .upload-area .browse-text {
+        .placeholder .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 180, 216, 0.08);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            border-radius: 30px;
+            padding: 10px 24px;
+            font-size: 13px;
             color: #00B4D8;
             font-weight: 600;
         }
 
-        .file-input {
-            display: none;
+        .status-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: #00B4D8;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
 
-        /* Info text below upload */
-        .upload-info {
-            margin-top: 16px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .upload-info code {
-            background: rgba(255, 255, 255, 0.06);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
         }
 
         @keyframes fadeIn {
@@ -275,106 +273,50 @@
         <iframe class="pdf-frame" id="pdfFrame"></iframe>
 
         <div class="placeholder" id="placeholder">
+            <div class="placeholder-logo">
+                <img src="Logo.png" alt="IMAJI">
+            </div>
             <div class="placeholder-icon">
                 <i class="fas fa-file-pdf"></i>
             </div>
             <h2>Company Profile</h2>
-            <p>Tempatkan file PDF company profile Anda untuk ditampilkan di sini.</p>
-
-            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Drag & drop PDF di sini, atau <span class="browse-text">pilih file</span></p>
+            <p class="subtitle">Coming Soon</p>
+            <p class="desc">Dokumen company profile sedang dalam proses penyusunan dan akan segera tersedia di halaman ini.</p>
+            <div class="status-badge">
+                <span class="dot"></span>
+                Dalam Pengembangan
             </div>
-            <input type="file" id="fileInput" class="file-input" accept=".pdf" onchange="handleFileSelect(event)">
-
-            <p class="upload-info">
-                Atau letakkan file <code>company-profile.pdf</code> di folder yang sama dengan file ini.
-            </p>
         </div>
     </div>
 
     <script>
-        let currentPdfUrl = null;
-
         // Try to load company-profile.pdf automatically
         function tryLoadDefaultPdf() {
             const pdfUrl = 'company-profile.pdf?v=' + Date.now();
             fetch(pdfUrl, { method: 'HEAD' })
                 .then(response => {
                     if (response.ok) {
-                        showPdf(pdfUrl);
+                        const frame = document.getElementById('pdfFrame');
+                        const placeholder = document.getElementById('placeholder');
+                        const btnDownload = document.getElementById('btnDownload');
+
+                        frame.src = pdfUrl;
+                        frame.style.display = 'block';
+                        placeholder.style.display = 'none';
+                        btnDownload.style.display = 'flex';
                     }
                 })
                 .catch(() => {
-                    // PDF not found, show placeholder
+                    // PDF not found, show coming soon placeholder
                 });
         }
 
-        function showPdf(url) {
-            const frame = document.getElementById('pdfFrame');
-            const placeholder = document.getElementById('placeholder');
-            const btnDownload = document.getElementById('btnDownload');
-
-            frame.src = url;
-            frame.style.display = 'block';
-            placeholder.style.display = 'none';
-            btnDownload.style.display = 'flex';
-            currentPdfUrl = url;
-        }
-
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file && file.type === 'application/pdf') {
-                const url = URL.createObjectURL(file);
-                showPdf(url);
-                // Store the file for download
-                currentPdfUrl = url;
-                window._uploadedFile = file;
-            }
-        }
-
         function downloadPdf() {
-            if (window._uploadedFile) {
-                // Downloaded uploaded file
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(window._uploadedFile);
-                a.download = window._uploadedFile.name;
-                a.click();
-            } else if (currentPdfUrl) {
-                // Download server PDF
-                const a = document.createElement('a');
-                a.href = currentPdfUrl.split('?')[0]; // Remove cache-busting param
-                a.download = 'Company-Profile-IMAJI.pdf';
-                a.click();
-            }
+            const a = document.createElement('a');
+            a.href = 'company-profile.pdf';
+            a.download = 'Company-Profile-IMAJI.pdf';
+            a.click();
         }
-
-        // Drag and drop support
-        const viewer = document.querySelector('.viewer-container');
-
-        viewer.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const uploadArea = document.querySelector('.upload-area');
-            if (uploadArea) uploadArea.style.borderColor = 'rgba(0, 180, 216, 0.8)';
-        });
-
-        viewer.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            const uploadArea = document.querySelector('.upload-area');
-            if (uploadArea) uploadArea.style.borderColor = 'rgba(0, 180, 216, 0.3)';
-        });
-
-        viewer.addEventListener('drop', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const files = e.dataTransfer.files;
-            if (files.length > 0 && files[0].type === 'application/pdf') {
-                const url = URL.createObjectURL(files[0]);
-                showPdf(url);
-                window._uploadedFile = files[0];
-            }
-        });
 
         // Try loading default PDF on page load
         tryLoadDefaultPdf();
