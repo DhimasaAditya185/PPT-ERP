@@ -275,12 +275,15 @@
             display: flex;
         }
 
+        .fullscreen-overlay { cursor: pointer; }
+
         .fullscreen-overlay iframe {
             width: 1280px;
             height: 720px;
             border: none;
             transform-origin: center center;
             position: absolute;
+            pointer-events: none;
             top: 50%;
             left: 50%;
         }
@@ -553,7 +556,7 @@
 </div>
 
 <!-- FULLSCREEN -->
-<div class="fullscreen-overlay" id="fullscreenOverlay">
+<div class="fullscreen-overlay" id="fullscreenOverlay" onclick="handleFullscreenClick(event)">
     <iframe id="fullscreenIframe" src=""></iframe>
     <div class="fullscreen-nav">
         <button onclick="fullscreenPrev()"><i class="fas fa-chevron-left"></i></button>
@@ -686,6 +689,19 @@ function fullscreenNext() {
         goToSlide(currentSlide + 1);
         document.getElementById('fullscreenIframe').src = getSlideUrl(currentSlide);
         document.getElementById('fsCounter').textContent = `${currentSlide + 1} / ${TOTAL_SLIDES}`;
+    }
+}
+
+// Click on fullscreen area to navigate (left 30% = prev, right 70% = next)
+function handleFullscreenClick(event) {
+    // Ignore clicks on the nav bar buttons
+    if (event.target.closest('.fullscreen-nav')) return;
+    const x = event.clientX;
+    const w = window.innerWidth;
+    if (x < w * 0.3) {
+        fullscreenPrev();
+    } else {
+        fullscreenNext();
     }
 }
 
