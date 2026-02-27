@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marketing - IMAJI ERP + QMS</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
+.slide { width:1280px; height:720px; background:#0A192F; position:relative; overflow:hidden; display:flex; flex-direction:column; }
+
+.bg-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,180,216,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,0.03) 1px,transparent 1px); background-size:60px 60px; }
+
+.header-stripe { position:relative; z-index:10; height:90px; display:flex; align-items:center; padding:0 60px; justify-content:space-between; border-bottom:1px solid rgba(0,180,216,0.15); flex-shrink:0; }
+.header-title { font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:28px; }
+.header-logo { display:flex; align-items:center; gap:10px; }
+.header-logo img { height:28px; filter:brightness(0) invert(1); }
+.header-logo span { color:rgba(255,255,255,0.5); font-size:13px; }
+.accent-bar { height:3px; background:linear-gradient(90deg,#00B4D8,#0077B6); flex-shrink:0; position:relative; z-index:10; }
+
+.content { flex:1; position:relative; z-index:5; display:flex; flex-direction:column; padding:30px 60px; gap:20px; }
+
+.subtitle { font-size:11px; font-weight:700; color:#00B4D8; letter-spacing:3px; text-transform:uppercase; }
+.section-title { font-family:'Montserrat',sans-serif; font-weight:800; font-size:26px; color:#fff; margin-top:6px; }
+
+.compare-table { flex:1; }
+
+.table-header { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:2px; margin-bottom:2px; }
+.th { padding:12px 20px; font-family:'Montserrat',sans-serif; font-weight:700; font-size:13px; border-radius:8px; }
+.th-feature { background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5); }
+.th-imaji { background:#00B4D8; color:#0A192F; text-align:center; }
+.th-other { background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.4); text-align:center; }
+
+.table-row { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:2px; margin-bottom:2px; }
+.td { padding:13px 20px; background:rgba(255,255,255,0.03); border-radius:8px; display:flex; align-items:center; font-size:13px; }
+.td-feature { color:rgba(255,255,255,0.75); font-weight:500; gap:10px; }
+.td-feature i { color:#00B4D8; width:18px; }
+.td-check { justify-content:center; }
+.td-imaji { background:rgba(0,180,216,0.07); border:1px solid rgba(0,180,216,0.15); }
+.yes { color:#10B981; font-size:18px; }
+.no { color:#EF4444; font-size:18px; }
+.partial { color:#F59E0B; font-size:14px; font-weight:600; }
+</style>
+</head>
+<body>
+<div class="slide">
+    <div class="bg-grid"></div>
+    <div class="header-stripe">
+        <h1 class="header-title">Keunggulan Kompetitif</h1>
+        <div class="header-logo">
+            <span>IMAJI ERP + QMS</span>
+            <img src="../../Logo.png" alt="IMAJI">
+        </div>
+    </div>
+    <div class="accent-bar"></div>
+    <div class="content">
+        <div>
+            <p class="subtitle">Perbandingan Solusi</p>
+            <h2 class="section-title">Mengapa Memilih IMAJI?</h2>
+        </div>
+        <div class="compare-table">
+            <div class="table-header">
+                <div class="th th-feature">Fitur</div>
+                <div class="th th-imaji">IMAJI ERP + QMS</div>
+                <div class="th th-other">ERP Generic</div>
+                <div class="th th-other">ERP Lokal Lain</div>
+            </div>
+            <div class="table-row">
+                <div class="td td-feature"><i class="fas fa-certificate"></i> Integrasi ISO 9001:2015 Native</div>
+                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
+                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
+                <div class="td td-check"><span class="partial">Partial</span></div>
+            </div>
+            <div class="table-row">
+                <div class="td td-feature"><i class="fas fa-shield-alt"></i> QC Inspeksi IQC / IPQC / FQC</div>
+                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
+                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
+                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
+            </div>
+            <div class="table-row">
+                <div class="td td-feature"><i class="fas fa-industry"></i> Fokus Industri Manufaktur</div>
+                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
+                <div class="td td-check"><span class="partial">Partial</span></div>
+                <div class="td td-check"><i class="fas fa-check-circle yes"></i></div>
+            </div>
+            <div class="table-row">
+                <div class="td td-feature"><i class="fas fa-headset"></i> Dukungan Lokal & Kustomisasi</div>
+                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
+                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
+                <div class="td td-check"><span class="partial">Terbatas</span></div>
+            </div>
+            <div class="table-row">
+                <div class="td td-feature"><i class="fas fa-dollar-sign"></i> Harga Kompetitif & Transparan</div>
+                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
+                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
+                <div class="td td-check"><span class="partial">Partial</span></div>
+            </div>
+            <div class="table-row">
+                <div class="td td-feature"><i class="fas fa-cloud"></i> Deployment Fleksibel (Cloud / On-Premise)</div>
+                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
+                <div class="td td-check"><span class="partial">Cloud Only</span></div>
+                <div class="td td-check"><span class="partial">On-Prem Only</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

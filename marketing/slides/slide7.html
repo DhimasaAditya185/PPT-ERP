@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marketing - IMAJI ERP + QMS</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
+.slide { width:1280px; height:720px; background:#0A192F; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+
+.bg-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,180,216,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,0.03) 1px,transparent 1px); background-size:60px 60px; }
+.glow-c { position:absolute; width:800px; height:800px; border-radius:50%; background:radial-gradient(circle, rgba(0,180,216,0.08) 0%, transparent 60%); top:50%; left:50%; transform:translate(-50%,-50%); }
+
+.ring { position:absolute; border-radius:50%; border:1px solid rgba(0,180,216,0.08); }
+.ring-1 { width:600px; height:600px; top:50%; left:50%; transform:translate(-50%,-50%); }
+.ring-2 { width:900px; height:900px; top:50%; left:50%; transform:translate(-50%,-50%); }
+
+.content { position:relative; z-index:10; text-align:center; max-width:900px; padding:0 60px; }
+
+.logo-area { margin-bottom:30px; }
+.logo-area img { height:56px; filter:brightness(0) invert(1); }
+
+.eyebrow { font-size:12px; font-weight:700; color:#00B4D8; letter-spacing:3px; text-transform:uppercase; margin-bottom:20px; }
+
+.headline { font-family:'Montserrat',sans-serif; font-weight:900; font-size:52px; color:#fff; line-height:1.15; margin-bottom:16px; }
+.headline span { color:#00B4D8; }
+
+.subtext { font-size:17px; color:rgba(255,255,255,0.5); line-height:1.7; margin-bottom:40px; max-width:640px; margin-left:auto; margin-right:auto; }
+
+.contact-row { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:40px; }
+
+.contact-chip {
+    display:flex; align-items:center; gap:10px;
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+    border-radius:50px; padding:12px 24px;
+    font-size:14px; color:rgba(255,255,255,0.75); font-weight:500;
+    transition:all 0.3s;
+}
+.contact-chip:hover { background:rgba(0,180,216,0.1); border-color:rgba(0,180,216,0.3); }
+.contact-chip i { color:#00B4D8; font-size:16px; }
+
+.cta-btn {
+    display:inline-flex; align-items:center; gap:12px;
+    background:#00B4D8; color:#0A192F;
+    font-family:'Montserrat',sans-serif; font-weight:800; font-size:16px;
+    padding:16px 40px; border-radius:50px;
+    box-shadow:0 8px 32px rgba(0,180,216,0.3);
+    cursor:pointer; text-decoration:none;
+}
+
+.tagline { margin-top:32px; font-size:13px; color:rgba(255,255,255,0.2); letter-spacing:2px; font-style:italic; }
+
+.bottom-bar { position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,transparent,#00B4D8,#0077B6,transparent); }
+</style>
+</head>
+<body>
+<div class="slide">
+    <div class="bg-grid"></div>
+    <div class="glow-c"></div>
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+
+    <div class="content">
+        <div class="logo-area">
+            <img src="../../Logo.png" alt="IMAJI">
+        </div>
+        <p class="eyebrow">Mulai Transformasi Anda Sekarang</p>
+        <h1 class="headline">Siap Membawa Bisnis Anda<br>ke Level <span>Berikutnya?</span></h1>
+        <p class="subtext">Hubungi tim kami untuk demo gratis dan konsultasi kebutuhan bisnis Anda. Kami siap merancang solusi yang tepat untuk industri Anda.</p>
+
+        <div class="contact-row">
+            <div class="contact-chip"><i class="fas fa-envelope"></i> imajiciptatechnology@gmail.com</div>
+            <div class="contact-chip"><i class="fas fa-phone"></i> +62 819 9103 3352</div>
+            <div class="contact-chip"><i class="fas fa-phone"></i> +62 822 8303 4006</div>
+        </div>
+
+        <a class="cta-btn">
+            <i class="fas fa-calendar-check"></i>
+            Jadwalkan Demo Gratis
+        </a>
+
+        <p class="tagline">"Single Source of Truth · Security-by-Design · Auditability"</p>
+    </div>
+
+    <div class="bottom-bar"></div>
+</div>
+</body>
+</html>
