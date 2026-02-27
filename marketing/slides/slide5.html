@@ -9,99 +9,115 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <style>
 body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
-.slide { width:1280px; height:720px; background:#0A192F; position:relative; overflow:hidden; display:flex; flex-direction:column; }
+.slide { width:1280px; height:720px; background:#fff; position:relative; overflow:hidden; display:flex; flex-direction:column; }
 
-.bg-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,180,216,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,0.03) 1px,transparent 1px); background-size:60px 60px; }
-
-.header-stripe { position:relative; z-index:10; height:90px; display:flex; align-items:center; padding:0 60px; justify-content:space-between; border-bottom:1px solid rgba(0,180,216,0.15); flex-shrink:0; }
+.header-stripe { background:#0A192F; height:90px; display:flex; align-items:center; padding:0 60px; justify-content:space-between; flex-shrink:0; }
 .header-title { font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:28px; }
-.header-logo { display:flex; align-items:center; gap:10px; }
-.header-logo img { height:28px; filter:brightness(0) invert(1); }
-.header-logo span { color:rgba(255,255,255,0.5); font-size:13px; }
-.accent-bar { height:3px; background:linear-gradient(90deg,#00B4D8,#0077B6); flex-shrink:0; position:relative; z-index:10; }
+.accent-bar { height:5px; background:linear-gradient(90deg,#00B4D8,#0077B6); flex-shrink:0; }
 
-.content { flex:1; position:relative; z-index:5; display:flex; flex-direction:column; padding:30px 60px; gap:20px; }
+.content { flex:1; padding:28px 60px; display:flex; flex-direction:column; gap:20px; }
 
-.subtitle { font-size:11px; font-weight:700; color:#00B4D8; letter-spacing:3px; text-transform:uppercase; }
-.section-title { font-family:'Montserrat',sans-serif; font-weight:800; font-size:26px; color:#fff; margin-top:6px; }
+.section-label { font-size:11px; font-weight:700; color:#00B4D8; letter-spacing:3px; text-transform:uppercase; }
+.section-title { font-family:'Montserrat',sans-serif; font-weight:800; font-size:26px; color:#0A192F; margin-top:4px; }
 
-.compare-table { flex:1; }
+.top-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
 
-.table-header { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:2px; margin-bottom:2px; }
-.th { padding:12px 20px; font-family:'Montserrat',sans-serif; font-weight:700; font-size:13px; border-radius:8px; }
-.th-feature { background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5); }
-.th-imaji { background:#00B4D8; color:#0A192F; text-align:center; }
-.th-other { background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.4); text-align:center; }
+.stat-card {
+    background:#0A192F; border-radius:14px; padding:20px 18px;
+    display:flex; flex-direction:column; gap:6px; position:relative; overflow:hidden;
+}
+.stat-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#00B4D8,#0077B6); }
+.stat-num { font-family:'Montserrat',sans-serif; font-weight:900; font-size:32px; color:#00B4D8; line-height:1; }
+.stat-label { font-size:12px; color:rgba(255,255,255,0.65); line-height:1.4; }
+.stat-source { font-size:9px; color:rgba(255,255,255,0.25); font-style:italic; margin-top:4px; }
 
-.table-row { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:2px; margin-bottom:2px; }
-.td { padding:13px 20px; background:rgba(255,255,255,0.03); border-radius:8px; display:flex; align-items:center; font-size:13px; }
-.td-feature { color:rgba(255,255,255,0.75); font-weight:500; gap:10px; }
-.td-feature i { color:#00B4D8; width:18px; }
-.td-check { justify-content:center; }
-.td-imaji { background:rgba(0,180,216,0.07); border:1px solid rgba(0,180,216,0.15); }
-.yes { color:#10B981; font-size:18px; }
-.no { color:#EF4444; font-size:18px; }
-.partial { color:#F59E0B; font-size:14px; font-weight:600; }
+.bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; flex:1; }
+
+.saving-card {
+    background:#F8FAFB; border:1px solid #E9ECEF; border-radius:14px;
+    padding:20px 24px; display:flex; gap:18px; align-items:flex-start;
+}
+.saving-icon {
+    width:48px; height:48px; border-radius:12px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:20px;
+}
+.icon-blue { background:#E0F7FA; color:#00B4D8; }
+.icon-green { background:#D1FAE5; color:#10B981; }
+.icon-purple { background:#EDE9FE; color:#8B5CF6; }
+.icon-orange { background:#FEF3C7; color:#F59E0B; }
+
+.saving-card h4 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:14px; color:#0A192F; margin-bottom:4px; }
+.saving-card p { font-size:12px; color:#64748b; line-height:1.5; }
+.saving-badge { display:inline-block; background:#0A192F; color:#00B4D8; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; margin-top:6px; font-family:'Montserrat',sans-serif; }
 </style>
 </head>
 <body>
 <div class="slide">
-    <div class="bg-grid"></div>
     <div class="header-stripe">
-        <h1 class="header-title">Keunggulan Kompetitif</h1>
-        <div class="header-logo">
-            
-            
-        </div>
+        <h1 class="header-title">Penghematan Biaya & Waktu Nyata</h1>
     </div>
     <div class="accent-bar"></div>
     <div class="content">
         <div>
-            <p class="subtitle">Perbandingan Solusi</p>
-            <h2 class="section-title">Mengapa Solusi Ini?</h2>
+            <p class="section-label">ROI & Cost Reduction</p>
+            <h2 class="section-title">Investasi Sekali, Hemat Berkelanjutan</h2>
         </div>
-        <div class="compare-table">
-            <div class="table-header">
-                <div class="th th-feature">Fitur</div>
-                <div class="th th-imaji">ERP + QMS Solution</div>
-                <div class="th th-other">ERP Generic</div>
-                <div class="th th-other">ERP Lokal Lain</div>
+
+        <div class="top-stats">
+            <div class="stat-card">
+                <div class="stat-num">35%</div>
+                <div class="stat-label">Pengurangan biaya operasional & overhead administrasi</div>
+                <div class="stat-source">Aberdeen Group, ERP Impact Study, 2023</div>
             </div>
-            <div class="table-row">
-                <div class="td td-feature"><i class="fas fa-certificate"></i> Integrasi ISO 9001:2015 Native</div>
-                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
-                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
-                <div class="td td-check"><span class="partial">Partial</span></div>
+            <div class="stat-card">
+                <div class="stat-num">50%</div>
+                <div class="stat-label">Lebih cepat dalam penyusunan laporan & audit dokumentasi</div>
+                <div class="stat-source">Gartner, ERP Benefits Realization, 2022</div>
             </div>
-            <div class="table-row">
-                <div class="td td-feature"><i class="fas fa-shield-alt"></i> QC Inspeksi IQC / IPQC / FQC</div>
-                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
-                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
-                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
+            <div class="stat-card">
+                <div class="stat-num">28%</div>
+                <div class="stat-label">Penurunan biaya kualitas (cost of poor quality)</div>
+                <div class="stat-source">ASQ Quality Progress Report, 2023</div>
             </div>
-            <div class="table-row">
-                <div class="td td-feature"><i class="fas fa-industry"></i> Fokus Industri Manufaktur</div>
-                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
-                <div class="td td-check"><span class="partial">Partial</span></div>
-                <div class="td td-check"><i class="fas fa-check-circle yes"></i></div>
+            <div class="stat-card">
+                <div class="stat-num">40%</div>
+                <div class="stat-label">Pengurangan waktu siklus produksi & lead time</div>
+                <div class="stat-source">McKinsey Manufacturing Report, 2023</div>
             </div>
-            <div class="table-row">
-                <div class="td td-feature"><i class="fas fa-headset"></i> Dukungan Lokal & Kustomisasi</div>
-                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
-                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
-                <div class="td td-check"><span class="partial">Terbatas</span></div>
+        </div>
+
+        <div class="bottom-grid">
+            <div class="saving-card">
+                <div class="saving-icon icon-blue"><i class="fas fa-file-invoice-dollar"></i></div>
+                <div>
+                    <h4>Eliminasi Biaya Kertas & Manual</h4>
+                    <p>Digitalisasi dokumen ISO, SOP, dan rekaman inspeksi menghilangkan biaya cetak, penyimpanan fisik, dan risiko kehilangan dokumen.</p>
+                    <span class="saving-badge">Hemat biaya administrasi 60–80%</span>
+                </div>
             </div>
-            <div class="table-row">
-                <div class="td td-feature"><i class="fas fa-dollar-sign"></i> Harga Kompetitif & Transparan</div>
-                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
-                <div class="td td-check"><i class="fas fa-times-circle no"></i></div>
-                <div class="td td-check"><span class="partial">Partial</span></div>
+            <div class="saving-card">
+                <div class="saving-icon icon-green"><i class="fas fa-bug"></i></div>
+                <div>
+                    <h4>Kurangi Biaya Defect & Rework</h4>
+                    <p>Deteksi dini cacat melalui inspeksi real-time mencegah produk cacat lolos ke tahap lanjut — menghemat biaya pengerjaan ulang & klaim pelanggan.</p>
+                    <span class="saving-badge">Turunkan biaya rework hingga 30%</span>
+                </div>
             </div>
-            <div class="table-row">
-                <div class="td td-feature"><i class="fas fa-cloud"></i> Deployment Fleksibel (Cloud / On-Premise)</div>
-                <div class="td td-check td-imaji"><i class="fas fa-check-circle yes"></i></div>
-                <div class="td td-check"><span class="partial">Cloud Only</span></div>
-                <div class="td td-check"><span class="partial">On-Prem Only</span></div>
+            <div class="saving-card">
+                <div class="saving-icon icon-purple"><i class="fas fa-clock"></i></div>
+                <div>
+                    <h4>Hemat Waktu Persiapan Audit ISO</h4>
+                    <p>Seluruh rekaman audit, CAPA, dan dokumen ISO tersedia otomatis — tidak perlu lagi pengumpulan manual berhari-hari menjelang audit.</p>
+                    <span class="saving-badge">Waktu persiapan audit turun 70%</span>
+                </div>
+            </div>
+            <div class="saving-card">
+                <div class="saving-icon icon-orange"><i class="fas fa-boxes"></i></div>
+                <div>
+                    <h4>Optimasi Stok & Pembelian</h4>
+                    <p>Visibilitas stok real-time mencegah overstocking dan stockout. Otomasi PO berdasarkan reorder point mengurangi biaya pembelian tidak terencana.</p>
+                    <span class="saving-badge">Kurangi nilai stok berlebih 20–25%</span>
+                </div>
             </div>
         </div>
     </div>
