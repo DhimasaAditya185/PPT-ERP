@@ -935,16 +935,28 @@ async function exportToPPTX() {
                 continue;
             }
 
-            // Wait for fonts + all images to fully decode, then small CSS buffer
+            // Wait for all images to fully decode
             await waitForIframeImages(captureIframe);
-            await new Promise(r => setTimeout(r, 800));
 
-            // Capture the slide content from iframe
+            // Inject html2canvas INTO the iframe so it runs with the iframe's
+            // base URL — this is required for relative image paths to resolve
+            const iframeDoc = captureIframe.contentDocument || captureIframe.contentWindow.document;
+            if (!captureIframe.contentWindow.html2canvas) {
+                await new Promise((res, rej) => {
+                    const s = iframeDoc.createElement('script');
+                    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                    s.onload = res; s.onerror = rej;
+                    iframeDoc.head.appendChild(s);
+                });
+            }
+            // Small buffer for CSS to finish applying after images load
+            await new Promise(r => setTimeout(r, 500));
+
+            // Capture the slide — run html2canvas inside the iframe context
             try {
-                const iframeDoc = captureIframe.contentDocument || captureIframe.contentWindow.document;
                 const slideEl = iframeDoc.querySelector('.slide') || iframeDoc.body;
 
-                const canvas = await html2canvas(slideEl, {
+                const canvas = await captureIframe.contentWindow.html2canvas(slideEl, {
                     width: 1280,
                     height: 720,
                     scale: 2,
@@ -952,14 +964,6 @@ async function exportToPPTX() {
                     allowTaint: true,
                     backgroundColor: '#0A192F',
                     logging: false,
-                    onclone: function(clonedDoc) {
-                        const el = clonedDoc.querySelector('.slide');
-                        if (el) {
-                            el.style.width = '1280px';
-                            el.style.height = '720px';
-                            el.style.overflow = 'hidden';
-                        }
-                    }
                 });
 
                 const imgData = canvas.toDataURL('image/png');
