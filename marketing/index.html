@@ -871,6 +871,75 @@ async function waitForIframeImages(iframe, maxWait = 12000) {
     });
 }
 
+// Fetch any URL and return as a base64 data URL
+async function fetchAsDataUrl(url) {
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
+}
+
+// Extract screenshot images from an iframe with their PPTX positions (in inches).
+// Uses getBoundingClientRect() inside the iframe viewport (0-1280 x, 0-720 y)
+// and maps to PPTX inches (13.33 x 7.5).
+async function extractSlideImages(iframe) {
+    const results = [];
+    try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const baseUrl = iframe.contentWindow.location.href;
+        // Target only screenshot image wrappers, not icons or other imgs
+        const wrappers = Array.from(doc.querySelectorAll('.ss-img-wrapper'));
+        for (const wrapper of wrappers) {
+            const img = wrapper.querySelector('img');
+            if (!img) continue;
+            const src = img.getAttribute('src');
+            if (!src || src.startsWith('data:')) continue;
+            // Skip if image failed to load
+            if (!img.complete || img.naturalHeight === 0) continue;
+            const rect = wrapper.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) continue;
+            try {
+                const absoluteUrl = new URL(src, baseUrl).href;
+                const dataUrl = await fetchAsDataUrl(absoluteUrl);
+                // Compute contain sizing (match object-fit:contain + object-position:top center)
+                const imgAspect = img.naturalWidth / img.naturalHeight;
+                const boxAspect = rect.width / rect.height;
+                let drawW, drawH, drawX, drawY;
+                if (imgAspect > boxAspect) {
+                    // Image wider than box — fit by width, anchor top
+                    drawW = rect.width;
+                    drawH = rect.width / imgAspect;
+                    drawX = rect.left;
+                    drawY = rect.top; // object-position: top
+                } else {
+                    // Image taller than box — fit by height, center horizontally
+                    drawH = rect.height;
+                    drawW = rect.height * imgAspect;
+                    drawX = rect.left + (rect.width - drawW) / 2;
+                    drawY = rect.top; // object-position: top
+                }
+                results.push({
+                    dataUrl,
+                    x: (drawX / 1280) * 13.33,
+                    y: (drawY / 720) * 7.5,
+                    w: (drawW / 1280) * 13.33,
+                    h: (drawH / 720) * 7.5,
+                });
+            } catch (e) {
+                console.warn('Could not fetch screenshot for PPTX overlay:', src, e);
+            }
+        }
+    } catch (e) {
+        console.warn('extractSlideImages error:', e);
+    }
+    return results;
+}
+
 // ===== PPTX EXPORT (html2canvas + PptxGenJS) =====
 async function exportToPPTX() {
     // Check if running from file:// protocol
@@ -938,48 +1007,60 @@ async function exportToPPTX() {
             // Wait for all images to fully decode
             await waitForIframeImages(captureIframe);
 
-            // Inject html2canvas INTO the iframe so it runs with the iframe's
-            // base URL — this is required for relative image paths to resolve
             const iframeDoc = captureIframe.contentDocument || captureIframe.contentWindow.document;
-            if (!captureIframe.contentWindow.html2canvas) {
-                await new Promise((res, rej) => {
-                    const s = iframeDoc.createElement('script');
-                    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                    s.onload = res; s.onerror = rej;
-                    iframeDoc.head.appendChild(s);
-                });
-            }
-            // Small buffer for CSS to finish applying after images load
-            await new Promise(r => setTimeout(r, 500));
 
-            // Capture the slide — run html2canvas inside the iframe context
+            // Pre-fetch screenshot images as base64 with computed PPTX positions.
+            // This bypasses html2canvas which cannot render object-fit:contain correctly.
+            const slideImages = await extractSlideImages(captureIframe);
+
+            // Inject html2canvas INTO the iframe so UI chrome (header, cards, icons) renders
+            if (!captureIframe.contentWindow.html2canvas) {
+                try {
+                    await new Promise((res, rej) => {
+                        const s = iframeDoc.createElement('script');
+                        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                        s.onload = res; s.onerror = rej;
+                        iframeDoc.head.appendChild(s);
+                        setTimeout(rej, 8000);
+                    });
+                } catch(e) {
+                    console.warn('html2canvas inject failed for slide', i + 1, e);
+                }
+            }
+            await new Promise(r => setTimeout(r, 300));
+
+            // Capture the slide chrome (UI shell) with html2canvas
             try {
                 const slideEl = iframeDoc.querySelector('.slide') || iframeDoc.body;
-
-                const canvas = await captureIframe.contentWindow.html2canvas(slideEl, {
+                const h2c = captureIframe.contentWindow.html2canvas || window.html2canvas;
+                const canvas = await h2c(slideEl, {
                     width: 1280,
                     height: 720,
                     scale: 2,
                     useCORS: true,
                     allowTaint: true,
-                    backgroundColor: '#0A192F',
+                    backgroundColor: '#F0F4F8',
                     logging: false,
+                    ignoreElements: el => el.classList && el.classList.contains('ss-img-wrapper'),
                 });
 
                 const imgData = canvas.toDataURL('image/png');
-                pptSlide.addImage({
-                    data: imgData,
-                    x: 0, y: 0,
-                    w: 13.33, h: 7.5,
-                });
+                pptSlide.addImage({ data: imgData, x: 0, y: 0, w: 13.33, h: 7.5 });
             } catch (captureErr) {
-                console.warn(`Could not capture slide ${i + 1}:`, captureErr);
-                pptSlide.background = { fill: '0A192F' };
-                pptSlide.addText(`Slide ${i + 1}\n${slideLabels[i]}\n(Capture failed)`, {
-                    x: 0, y: 0, w: '100%', h: '100%',
-                    fontSize: 28, color: '64748b',
-                    align: 'center', valign: 'middle',
-                    fontFace: 'Montserrat',
+                console.warn(`html2canvas failed for slide ${i + 1}:`, captureErr);
+                // Still continue to overlay images even if chrome capture failed
+                pptSlide.background = { fill: 'F0F4F8' };
+            }
+
+            // Overlay the actual screenshot images on top of the chrome capture.
+            // These are fetched directly as base64, bypassing html2canvas entirely.
+            for (const imgInfo of slideImages) {
+                pptSlide.addImage({
+                    data: imgInfo.dataUrl,
+                    x: imgInfo.x,
+                    y: imgInfo.y,
+                    w: imgInfo.w,
+                    h: imgInfo.h,
                 });
             }
         }
