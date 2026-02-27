@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>IMAJI Marketing Presentation</title>
+    <title>Marketing Presentation - ERP + QMS</title>
     <link rel="icon" type="image/png" href="../image/icon.png">
     <script>document.querySelector('link[rel="icon"]').href = 'image/icon.png?v=' + Date.now();</script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -588,8 +588,8 @@
         <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
             <i class="fas fa-bars"></i>
         </button>
-        <a href="../index.html" class="toolbar-logo" title="Kembali ke Menu Utama"><img src="../Logo.png" alt="IMAJI"></a>
-        <span class="toolbar-title">IMAJI Marketing Presentation</span>
+        <a href="../index.html" class="toolbar-logo" title="Kembali ke Menu Utama"><i class="fas fa-arrow-left" style="color:rgba(255,255,255,0.6);font-size:16px;"></i></a>
+        <span class="toolbar-title">Marketing Presentation</span>
         <span class="slide-counter" id="slideCounter">Slide 1 / 7</span>
     </div>
     <div class="toolbar-right">
@@ -664,7 +664,7 @@ const TOTAL_SLIDES = 7;
 const slideLabels = [
     "Cover",
     "Tantangan Industri",
-    "Solusi IMAJI",
+    "Solusi ERP + QMS",
     "Manfaat Bisnis",
     "Keunggulan Kompetitif",
     "Proses Implementasi",
@@ -958,7 +958,7 @@ async function exportToPPTX() {
         // Clean up
         document.body.removeChild(renderContainer);
 
-        await pptx.writeFile({ fileName: 'IMAJI_ERP_QMS_Presentation.pptx' });
+        await pptx.writeFile({ fileName: 'Marketing_ERP_QMS_Presentation.pptx' });
 
     } catch (err) {
         alert('Error generating PPTX: ' + err.message);
