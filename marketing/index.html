@@ -913,8 +913,10 @@ async function exportToPPTX() {
                 continue;
             }
 
-            // Wait for fonts, Tailwind CSS, etc. to fully render
-            await new Promise(r => setTimeout(r, 2000));
+            // Wait for fonts, Tailwind CSS, images, etc. to fully render
+            // Extra time needed for slides with large screenshot images
+            const hasImages = [6, 7].includes(i); // slide7 and slide8 (0-indexed: 6,7)
+            await new Promise(r => setTimeout(r, hasImages ? 5000 : 2000));
 
             // Capture the slide content from iframe
             try {
