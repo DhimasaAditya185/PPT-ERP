@@ -849,6 +849,28 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// ===== PPTX EXPORT HELPERS =====
+// Wait until every <img> inside the iframe has fully decoded (or timeout)
+async function waitForIframeImages(iframe, maxWait = 12000) {
+    const start = Date.now();
+    return new Promise((resolve) => {
+        function check() {
+            try {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                const imgs = Array.from(doc.querySelectorAll('img'));
+                const allDone = imgs.length === 0 ||
+                    imgs.every(img => img.complete && img.naturalHeight > 0);
+                if (allDone || Date.now() - start > maxWait) {
+                    resolve();
+                } else {
+                    setTimeout(check, 150);
+                }
+            } catch (e) { resolve(); }
+        }
+        setTimeout(check, 200);
+    });
+}
+
 // ===== PPTX EXPORT (html2canvas + PptxGenJS) =====
 async function exportToPPTX() {
     // Check if running from file:// protocol
@@ -913,15 +935,14 @@ async function exportToPPTX() {
                 continue;
             }
 
-            // Wait for fonts, Tailwind CSS, images, etc. to fully render
-            // Extra time needed for slides with large screenshot images
-            const hasImages = [6, 7].includes(i); // slide7 and slide8 (0-indexed: 6,7)
-            await new Promise(r => setTimeout(r, hasImages ? 5000 : 2000));
+            // Wait for fonts + all images to fully decode, then small CSS buffer
+            await waitForIframeImages(captureIframe);
+            await new Promise(r => setTimeout(r, 800));
 
             // Capture the slide content from iframe
             try {
                 const iframeDoc = captureIframe.contentDocument || captureIframe.contentWindow.document;
-                const slideEl = iframeDoc.querySelector('.slide-container') || iframeDoc.body;
+                const slideEl = iframeDoc.querySelector('.slide') || iframeDoc.body;
 
                 const canvas = await html2canvas(slideEl, {
                     width: 1280,
@@ -932,7 +953,7 @@ async function exportToPPTX() {
                     backgroundColor: '#0A192F',
                     logging: false,
                     onclone: function(clonedDoc) {
-                        const el = clonedDoc.querySelector('.slide-container');
+                        const el = clonedDoc.querySelector('.slide');
                         if (el) {
                             el.style.width = '1280px';
                             el.style.height = '720px';
