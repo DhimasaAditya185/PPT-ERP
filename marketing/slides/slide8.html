@@ -3,85 +3,184 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Marketing - IMAJI ERP + QMS</title>
+<title>Marketing - ERP + QMS Solution</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <style>
 body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
-.slide { width:1280px; height:720px; background:#0A192F; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.slide { width:1280px; height:720px; background:#F0F4F8; position:relative; overflow:hidden; display:flex; flex-direction:column; }
 
-.bg-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,180,216,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,0.03) 1px,transparent 1px); background-size:60px 60px; }
-.glow-c { position:absolute; width:800px; height:800px; border-radius:50%; background:radial-gradient(circle, rgba(0,180,216,0.08) 0%, transparent 60%); top:50%; left:50%; transform:translate(-50%,-50%); }
+.header-stripe { background:#0A192F; height:72px; display:flex; align-items:center; padding:0 48px; justify-content:space-between; flex-shrink:0; }
+.header-title { font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:24px; }
+.header-right { display:flex; align-items:center; gap:12px; }
+.header-badge { display:flex; align-items:center; gap:6px; background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.25); border-radius:20px; padding:4px 14px; }
+.header-badge i { font-size:9px; color:#00B4D8; }
+.header-badge span { font-size:10px; color:#00B4D8; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+.part-badge { font-size:11px; color:rgba(255,255,255,0.35); font-family:'Montserrat',sans-serif; font-weight:600; }
+.accent-bar { height:4px; background:linear-gradient(90deg,#00B4D8,#0077B6); flex-shrink:0; }
 
-.ring { position:absolute; border-radius:50%; border:1px solid rgba(0,180,216,0.08); }
-.ring-1 { width:600px; height:600px; top:50%; left:50%; transform:translate(-50%,-50%); }
-.ring-2 { width:900px; height:900px; top:50%; left:50%; transform:translate(-50%,-50%); }
+.content { flex:1; padding:14px 20px 14px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:14px; }
 
-.content { position:relative; z-index:10; text-align:center; max-width:900px; padding:0 60px; }
-
-.logo-area { margin-bottom:30px; }
-.logo-area img { height:56px; filter:brightness(0) invert(1); }
-
-.eyebrow { font-size:12px; font-weight:700; color:#00B4D8; letter-spacing:3px; text-transform:uppercase; margin-bottom:20px; }
-
-.headline { font-family:'Montserrat',sans-serif; font-weight:900; font-size:52px; color:#fff; line-height:1.15; margin-bottom:16px; }
-.headline span { color:#00B4D8; }
-
-.subtext { font-size:17px; color:rgba(255,255,255,0.5); line-height:1.7; margin-bottom:40px; max-width:640px; margin-left:auto; margin-right:auto; }
-
-.contact-row { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:40px; }
-
-.contact-chip {
-    display:flex; align-items:center; gap:10px;
-    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
-    border-radius:50px; padding:12px 24px;
-    font-size:14px; color:rgba(255,255,255,0.75); font-weight:500;
-    transition:all 0.3s;
-}
-.contact-chip:hover { background:rgba(0,180,216,0.1); border-color:rgba(0,180,216,0.3); }
-.contact-chip i { color:#00B4D8; font-size:16px; }
-
-.cta-btn {
-    display:inline-flex; align-items:center; gap:12px;
-    background:#00B4D8; color:#0A192F;
-    font-family:'Montserrat',sans-serif; font-weight:800; font-size:16px;
-    padding:16px 40px; border-radius:50px;
-    box-shadow:0 8px 32px rgba(0,180,216,0.3);
-    cursor:pointer; text-decoration:none;
+.ss-card {
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid #E2E8F0;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 2px 12px rgba(0,0,0,0.07);
 }
 
-.tagline { margin-top:32px; font-size:13px; color:rgba(255,255,255,0.2); letter-spacing:2px; font-style:italic; }
+.ss-img-wrapper {
+    flex:1;
+    overflow:hidden;
+    background:#EFF3F7;
+    position:relative;
+}
 
-.bottom-bar { position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,transparent,#00B4D8,#0077B6,transparent); }
+.ss-img-wrapper img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:top;
+    display:block;
+    opacity:0;
+    transition:opacity 0.3s;
+}
+.ss-img-wrapper img.loaded { opacity:1; }
+.ss-img-wrapper img.loaded ~ .placeholder { display:none; }
+
+.placeholder {
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:#EFF3F7;
+}
+.placeholder i { font-size:32px; color:#CBD5E1; }
+.placeholder span { font-size:10px; color:#94a3b8; font-family:'Montserrat',sans-serif; font-weight:600; }
+
+.module-tag {
+    position:absolute;
+    top:10px; left:10px;
+    background:rgba(10,25,47,0.72);
+    backdrop-filter:blur(4px);
+    color:#00B4D8;
+    font-size:10px;
+    font-weight:700;
+    padding:4px 10px;
+    border-radius:20px;
+    letter-spacing:0.5px;
+    font-family:'Montserrat',sans-serif;
+    z-index:2;
+}
+
+.ss-footer {
+    flex-shrink:0;
+    padding:8px 14px;
+    background:#fff;
+    border-top:3px solid #00B4D8;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.ss-icon-wrap {
+    width:28px; height:28px;
+    border-radius:8px;
+    background:rgba(0,180,216,0.1);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+}
+.ss-icon-wrap i { font-size:12px; color:#00B4D8; }
+.ss-module { font-family:'Montserrat',sans-serif; font-weight:700; font-size:12px; color:#0A192F; }
+.ss-tag { font-size:10px; color:#64748b; margin-top:1px; }
 </style>
 </head>
 <body>
 <div class="slide">
-    <div class="bg-grid"></div>
-    <div class="glow-c"></div>
-    <div class="ring ring-1"></div>
-    <div class="ring ring-2"></div>
-
+    <div class="header-stripe">
+        <h1 class="header-title">Platform dalam Aksi</h1>
+        <div class="header-right">
+            <div class="header-badge"><i class="fas fa-circle"></i><span>Live System Screenshots</span></div>
+            <span class="part-badge">2 / 2</span>
+        </div>
+    </div>
+    <div class="accent-bar"></div>
     <div class="content">
-        <p class="eyebrow">Mulai Transformasi Anda Sekarang</p>
-        <h1 class="headline">Siap Membawa Bisnis Anda<br>ke Level <span>Berikutnya?</span></h1>
-        <p class="subtext">Hubungi tim kami untuk demo gratis dan konsultasi kebutuhan bisnis Anda. Kami siap merancang solusi yang tepat untuk industri Anda.</p>
 
-        <div class="contact-row">
-            <div class="contact-chip"><i class="fas fa-user"></i> Achmad Syarif Kadir</div>
-            <div class="contact-chip"><i class="fas fa-envelope"></i> achmad.syarif.kadir@gmail.com</div>
+        <!-- 5: Inventory + Quality -->
+        <div class="ss-card">
+            <div class="ss-img-wrapper">
+                <span class="module-tag">Inventory Integration</span>
+                <img src="../images/ss-inventory-quality.png" alt="Inventory Quality"
+                     onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+                <div class="placeholder"><i class="fas fa-boxes"></i><span>ss-inventory-quality.png</span></div>
+            </div>
+            <div class="ss-footer">
+                <div class="ss-icon-wrap"><i class="fas fa-boxes"></i></div>
+                <div>
+                    <div class="ss-module">Inventory + Quality</div>
+                    <div class="ss-tag">Quality check otomatis di setiap transfer</div>
+                </div>
+            </div>
         </div>
 
-        <a class="cta-btn">
-            <i class="fas fa-calendar-check"></i>
-            Jadwalkan Demo Gratis
-        </a>
+        <!-- 6: Document Control -->
+        <div class="ss-card">
+            <div class="ss-img-wrapper">
+                <span class="module-tag">Document Control</span>
+                <img src="../images/ss-document-control.png" alt="Document Control"
+                     onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+                <div class="placeholder"><i class="fas fa-file-contract"></i><span>ss-document-control.png</span></div>
+            </div>
+            <div class="ss-footer">
+                <div class="ss-icon-wrap"><i class="fas fa-file-contract"></i></div>
+                <div>
+                    <div class="ss-module">Document Control</div>
+                    <div class="ss-tag">Versi dokumen & audit trail lengkap</div>
+                </div>
+            </div>
+        </div>
 
-        <p class="tagline">"Single Source of Truth · Security-by-Design · Auditability"</p>
+        <!-- 7: Approval Workflow -->
+        <div class="ss-card">
+            <div class="ss-img-wrapper">
+                <span class="module-tag">Approvals</span>
+                <img src="../images/ss-approvals.png" alt="Approvals"
+                     onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+                <div class="placeholder"><i class="fas fa-user-check"></i><span>ss-approvals.png</span></div>
+            </div>
+            <div class="ss-footer">
+                <div class="ss-icon-wrap"><i class="fas fa-user-check"></i></div>
+                <div>
+                    <div class="ss-module">Approval Workflow</div>
+                    <div class="ss-tag">Multi-level approval & notifikasi</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8: Dashboard -->
+        <div class="ss-card">
+            <div class="ss-img-wrapper">
+                <span class="module-tag">Dashboard</span>
+                <img src="../images/ss-dashboard.png" alt="Dashboard"
+                     onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+                <div class="placeholder"><i class="fas fa-tachometer-alt"></i><span>ss-dashboard.png</span></div>
+            </div>
+            <div class="ss-footer">
+                <div class="ss-icon-wrap"><i class="fas fa-tachometer-alt"></i></div>
+                <div>
+                    <div class="ss-module">Dashboard & Reporting</div>
+                    <div class="ss-tag">Insight bisnis real-time multi-modul</div>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-    <div class="bottom-bar"></div>
 </div>
 </body>
 </html>

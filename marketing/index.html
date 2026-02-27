@@ -590,7 +590,7 @@
         </button>
         <a href="../index.html" class="toolbar-logo" title="Kembali ke Menu Utama"><i class="fas fa-arrow-left" style="color:rgba(255,255,255,0.6);font-size:16px;"></i></a>
         <span class="toolbar-title">Marketing Presentation</span>
-        <span class="slide-counter" id="slideCounter">Slide 1 / 8</span>
+        <span class="slide-counter" id="slideCounter">Slide 1 / 9</span>
     </div>
     <div class="toolbar-right">
         <button class="btn btn-present" onclick="toggleFullscreen()" title="Present (F5)">
@@ -637,7 +637,7 @@
     <div class="fullscreen-click-layer" onclick="handleFullscreenClick(event)"></div>
     <div class="fullscreen-nav">
         <button onclick="fullscreenPrev()"><i class="fas fa-chevron-left"></i></button>
-        <span class="fs-counter" id="fsCounter">1 / 8</span>
+        <span class="fs-counter" id="fsCounter">1 / 9</span>
         <button onclick="fullscreenNext()"><i class="fas fa-chevron-right"></i></button>
         <button class="fs-close" onclick="toggleFullscreen()"><i class="fas fa-times"></i></button>
     </div>
@@ -653,13 +653,13 @@
 <!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="spinner"></div>
-    <div class="loading-progress" id="loadingProgress">0 / 8</div>
+    <div class="loading-progress" id="loadingProgress">0 / 9</div>
     <div class="loading-text">Generating PPTX — capturing slides...</div>
 </div>
 
 <script>
 // ===== SLIDE CONFIG =====
-const TOTAL_SLIDES = 8;
+const TOTAL_SLIDES = 9;
 
 const slideLabels = [
     "Cover",
@@ -668,7 +668,8 @@ const slideLabels = [
     "Manfaat Bisnis",
     "Keunggulan Kompetitif",
     "Proses Implementasi",
-    "Platform Demo",
+    "Platform Demo (1/2)",
+    "Platform Demo (2/2)",
     "Call to Action",
 ];
 

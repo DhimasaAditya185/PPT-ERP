@@ -11,41 +11,29 @@
 body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
 .slide { width:1280px; height:720px; background:#F0F4F8; position:relative; overflow:hidden; display:flex; flex-direction:column; }
 
-.header-stripe { background:#0A192F; height:78px; display:flex; align-items:center; padding:0 48px; justify-content:space-between; flex-shrink:0; }
-.header-title { font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:26px; }
-.header-right { display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
-.header-sub { font-size:11px; color:rgba(255,255,255,0.4); letter-spacing:2px; text-transform:uppercase; }
-.header-badge { display:flex; align-items:center; gap:6px; background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.25); border-radius:20px; padding:3px 12px; }
-.header-badge i { font-size:10px; color:#00B4D8; }
+.header-stripe { background:#0A192F; height:72px; display:flex; align-items:center; padding:0 48px; justify-content:space-between; flex-shrink:0; }
+.header-title { font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:24px; }
+.header-right { display:flex; align-items:center; gap:12px; }
+.header-badge { display:flex; align-items:center; gap:6px; background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.25); border-radius:20px; padding:4px 14px; }
+.header-badge i { font-size:9px; color:#00B4D8; }
 .header-badge span { font-size:10px; color:#00B4D8; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+.part-badge { font-size:11px; color:rgba(255,255,255,0.35); font-family:'Montserrat',sans-serif; font-weight:600; }
 .accent-bar { height:4px; background:linear-gradient(90deg,#00B4D8,#0077B6); flex-shrink:0; }
 
-.content { flex:1; padding:16px 24px 20px; display:flex; flex-direction:column; gap:10px; }
-
-.screenshots-grid {
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    grid-template-rows:repeat(2,1fr);
-    gap:12px;
-    flex:1;
-}
+.content { flex:1; padding:14px 20px 14px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:14px; }
 
 .ss-card {
     background:#fff;
-    border-radius:10px;
+    border-radius:12px;
     overflow:hidden;
     border:1px solid #E2E8F0;
     display:flex;
     flex-direction:column;
-    box-shadow:0 2px 10px rgba(0,0,0,0.07);
-    transition:all 0.2s;
-    position:relative;
+    box-shadow:0 2px 12px rgba(0,0,0,0.07);
 }
 
 .ss-img-wrapper {
-    flex-shrink:0;
-    width:100%;
-    aspect-ratio:16/9;
+    flex:1;
     overflow:hidden;
     background:#EFF3F7;
     position:relative;
@@ -57,10 +45,13 @@ body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
     object-fit:cover;
     object-position:top;
     display:block;
+    opacity:0;
+    transition:opacity 0.3s;
 }
+.ss-img-wrapper img.loaded { opacity:1; }
+.ss-img-wrapper img.loaded ~ .placeholder { display:none; }
 
-/* Fallback placeholder shown via ::after when image fails */
-.ss-img-wrapper .placeholder {
+.placeholder {
     position:absolute;
     inset:0;
     display:flex;
@@ -70,207 +61,125 @@ body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
     gap:8px;
     background:#EFF3F7;
 }
-.ss-img-wrapper .placeholder i { font-size:28px; color:#CBD5E1; }
-.ss-img-wrapper .placeholder span { font-size:10px; color:#94a3b8; font-family:'Montserrat',sans-serif; font-weight:600; }
-.ss-img-wrapper img.loaded + .placeholder { display:none; }
-
-.ss-footer {
-    flex:1;
-    padding:8px 12px;
-    background:#fff;
-    border-top:2px solid #00B4D8;
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-.ss-icon-wrap {
-    width:26px; height:26px;
-    border-radius:7px;
-    background:rgba(0,180,216,0.1);
-    display:flex; align-items:center; justify-content:center;
-    flex-shrink:0;
-}
-.ss-icon-wrap i { font-size:12px; color:#00B4D8; }
-.ss-module { font-family:'Montserrat',sans-serif; font-weight:700; font-size:11px; color:#0A192F; line-height:1.3; }
-.ss-tag { font-size:9.5px; color:#64748b; line-height:1.3; margin-top:1px; }
+.placeholder i { font-size:32px; color:#CBD5E1; }
+.placeholder span { font-size:10px; color:#94a3b8; font-family:'Montserrat',sans-serif; font-weight:600; }
 
 .module-tag {
     position:absolute;
-    top:7px; left:7px;
-    background:rgba(10,25,47,0.75);
+    top:10px; left:10px;
+    background:rgba(10,25,47,0.72);
     backdrop-filter:blur(4px);
     color:#00B4D8;
-    font-size:9px;
+    font-size:10px;
     font-weight:700;
-    padding:3px 8px;
+    padding:4px 10px;
     border-radius:20px;
     letter-spacing:0.5px;
     font-family:'Montserrat',sans-serif;
     z-index:2;
 }
+
+.ss-footer {
+    flex-shrink:0;
+    padding:8px 14px;
+    background:#fff;
+    border-top:3px solid #00B4D8;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.ss-icon-wrap {
+    width:28px; height:28px;
+    border-radius:8px;
+    background:rgba(0,180,216,0.1);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+}
+.ss-icon-wrap i { font-size:12px; color:#00B4D8; }
+.ss-module { font-family:'Montserrat',sans-serif; font-weight:700; font-size:12px; color:#0A192F; }
+.ss-tag { font-size:10px; color:#64748b; margin-top:1px; }
 </style>
 </head>
 <body>
 <div class="slide">
     <div class="header-stripe">
-        <div>
-            <h1 class="header-title">Platform dalam Aksi</h1>
-        </div>
+        <h1 class="header-title">Platform dalam Aksi</h1>
         <div class="header-right">
             <div class="header-badge"><i class="fas fa-circle"></i><span>Live System Screenshots</span></div>
-            <p class="header-sub">Tampilan nyata sistem ERP + QMS terintegrasi</p>
+            <span class="part-badge">1 / 2</span>
         </div>
     </div>
     <div class="accent-bar"></div>
     <div class="content">
-        <div class="screenshots-grid">
 
-            <!-- 1: Quality Overview -->
-            <div class="ss-card">
-                <div class="ss-img-wrapper">
-                    <span class="module-tag">Quality Management</span>
-                    <img src="../images/ss-quality-overview.png" alt="Quality Overview"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.display='none'"/>
-                    <div class="placeholder"><i class="fas fa-th-large"></i><span>ss-quality-overview.png</span></div>
-                </div>
-                <div class="ss-footer">
-                    <div class="ss-icon-wrap"><i class="fas fa-th-large"></i></div>
-                    <div>
-                        <div class="ss-module">Quality Overview</div>
-                        <div class="ss-tag">Todo, Pass & Failed per operasi</div>
-                    </div>
+        <!-- 1: Quality Overview -->
+        <div class="ss-card">
+            <div class="ss-img-wrapper">
+                <span class="module-tag">Quality Management</span>
+                <img src="../images/ss-quality-overview.png" alt="Quality Overview"
+                     onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+                <div class="placeholder"><i class="fas fa-th-large"></i><span>ss-quality-overview.png</span></div>
+            </div>
+            <div class="ss-footer">
+                <div class="ss-icon-wrap"><i class="fas fa-th-large"></i></div>
+                <div>
+                    <div class="ss-module">Quality Overview</div>
+                    <div class="ss-tag">Todo, Pass & Failed Checks per operasi</div>
                 </div>
             </div>
-
-            <!-- 2: Control Points -->
-            <div class="ss-card">
-                <div class="ss-img-wrapper">
-                    <span class="module-tag">Quality Control</span>
-                    <img src="../images/ss-control-points.png" alt="Control Points"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.display='none'"/>
-                    <div class="placeholder"><i class="fas fa-clipboard-check"></i><span>ss-control-points.png</span></div>
-                </div>
-                <div class="ss-footer">
-                    <div class="ss-icon-wrap"><i class="fas fa-clipboard-check"></i></div>
-                    <div>
-                        <div class="ss-module">Quality Control Points</div>
-                        <div class="ss-tag">Konfigurasi instruksi & tipe check</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3: Quality Check Execution -->
-            <div class="ss-card">
-                <div class="ss-img-wrapper">
-                    <span class="module-tag">Inspection</span>
-                    <img src="../images/ss-quality-check.png" alt="Quality Check"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.display='none'"/>
-                    <div class="placeholder"><i class="fas fa-search"></i><span>ss-quality-check.png</span></div>
-                </div>
-                <div class="ss-footer">
-                    <div class="ss-icon-wrap"><i class="fas fa-search"></i></div>
-                    <div>
-                        <div class="ss-module">Eksekusi Quality Check</div>
-                        <div class="ss-tag">Measure, Pass-Fail & lampiran PDF</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4: Quality Reports -->
-            <div class="ss-card">
-                <div class="ss-img-wrapper">
-                    <span class="module-tag">Reporting</span>
-                    <img src="../images/ss-quality-reports.png" alt="Quality Reports"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.display='none'"/>
-                    <div class="placeholder"><i class="fas fa-chart-bar"></i><span>ss-quality-reports.png</span></div>
-                </div>
-                <div class="ss-footer">
-                    <div class="ss-icon-wrap"><i class="fas fa-chart-bar"></i></div>
-                    <div>
-                        <div class="ss-module">Laporan & Analitik Kualitas</div>
-                        <div class="ss-tag">Bar, Line & Pie chart interaktif</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5: Inventory + Quality Integration -->
-            <div class="ss-card">
-                <div class="ss-img-wrapper">
-                    <span class="module-tag">Inventory Integration</span>
-                    <img src="../images/ss-inventory-quality.png" alt="Inventory Quality"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.display='none'"/>
-                    <div class="placeholder"><i class="fas fa-boxes"></i><span>ss-inventory-quality.png</span></div>
-                </div>
-                <div class="ss-footer">
-                    <div class="ss-icon-wrap"><i class="fas fa-boxes"></i></div>
-                    <div>
-                        <div class="ss-module">Inventory + Quality</div>
-                        <div class="ss-tag">Quality check otomatis di transfer</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 6: Document Control -->
-            <div class="ss-card">
-                <div class="ss-img-wrapper">
-                    <span class="module-tag">Document Control</span>
-                    <img src="../images/ss-document-control.png" alt="Document Control"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.display='none'"/>
-                    <div class="placeholder"><i class="fas fa-file-contract"></i><span>ss-document-control.png</span></div>
-                </div>
-                <div class="ss-footer">
-                    <div class="ss-icon-wrap"><i class="fas fa-file-contract"></i></div>
-                    <div>
-                        <div class="ss-module">Document Control</div>
-                        <div class="ss-tag">Versi dokumen & audit trail</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7: Approval Workflow -->
-            <div class="ss-card">
-                <div class="ss-img-wrapper">
-                    <span class="module-tag">Approvals</span>
-                    <img src="../images/ss-approvals.png" alt="Approvals"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.display='none'"/>
-                    <div class="placeholder"><i class="fas fa-user-check"></i><span>ss-approvals.png</span></div>
-                </div>
-                <div class="ss-footer">
-                    <div class="ss-icon-wrap"><i class="fas fa-user-check"></i></div>
-                    <div>
-                        <div class="ss-module">Approval Workflow</div>
-                        <div class="ss-tag">Multi-level approval & notifikasi</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8: Dashboard -->
-            <div class="ss-card">
-                <div class="ss-img-wrapper">
-                    <span class="module-tag">Dashboard</span>
-                    <img src="../images/ss-dashboard.png" alt="Dashboard"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.display='none'"/>
-                    <div class="placeholder"><i class="fas fa-tachometer-alt"></i><span>ss-dashboard.png</span></div>
-                </div>
-                <div class="ss-footer">
-                    <div class="ss-icon-wrap"><i class="fas fa-tachometer-alt"></i></div>
-                    <div>
-                        <div class="ss-module">Dashboard & Reporting</div>
-                        <div class="ss-tag">Insight bisnis real-time multi-modul</div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <!-- 2: Control Points -->
+        <div class="ss-card">
+            <div class="ss-img-wrapper">
+                <span class="module-tag">Quality Control</span>
+                <img src="../images/ss-control-points.png" alt="Control Points"
+                     onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+                <div class="placeholder"><i class="fas fa-clipboard-check"></i><span>ss-control-points.png</span></div>
+            </div>
+            <div class="ss-footer">
+                <div class="ss-icon-wrap"><i class="fas fa-clipboard-check"></i></div>
+                <div>
+                    <div class="ss-module">Quality Control Points</div>
+                    <div class="ss-tag">Konfigurasi instruksi & tipe pemeriksaan</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3: Quality Check Execution -->
+        <div class="ss-card">
+            <div class="ss-img-wrapper">
+                <span class="module-tag">Inspection</span>
+                <img src="../images/ss-quality-check.png" alt="Quality Check"
+                     onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+                <div class="placeholder"><i class="fas fa-search"></i><span>ss-quality-check.png</span></div>
+            </div>
+            <div class="ss-footer">
+                <div class="ss-icon-wrap"><i class="fas fa-search"></i></div>
+                <div>
+                    <div class="ss-module">Eksekusi Quality Check</div>
+                    <div class="ss-tag">Measure, Pass-Fail & lampiran PDF</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4: Quality Reports -->
+        <div class="ss-card">
+            <div class="ss-img-wrapper">
+                <span class="module-tag">Reporting</span>
+                <img src="../images/ss-quality-reports.png" alt="Quality Reports"
+                     onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+                <div class="placeholder"><i class="fas fa-chart-bar"></i><span>ss-quality-reports.png</span></div>
+            </div>
+            <div class="ss-footer">
+                <div class="ss-icon-wrap"><i class="fas fa-chart-bar"></i></div>
+                <div>
+                    <div class="ss-module">Laporan & Analitik Kualitas</div>
+                    <div class="ss-tag">Bar, Line & Pie chart interaktif</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>
