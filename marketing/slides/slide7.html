@@ -20,7 +20,7 @@ body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
 .part-badge { font-size:11px; color:rgba(255,255,255,0.35); font-family:'Montserrat',sans-serif; font-weight:600; }
 .accent-bar { height:4px; background:linear-gradient(90deg,#00B4D8,#0077B6); flex-shrink:0; }
 
-.content { flex:1; padding:14px 20px 14px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:14px; }
+.content { flex:1; min-height:0; overflow:hidden; padding:14px 20px 14px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:14px; }
 
 .ss-card {
     background:#fff;
@@ -30,10 +30,12 @@ body { margin:0; padding:0; overflow:hidden; font-family:'Roboto',sans-serif; }
     display:flex;
     flex-direction:column;
     box-shadow:0 2px 12px rgba(0,0,0,0.07);
+    min-height:0;
 }
 
 .ss-img-wrapper {
     flex:1;
+    min-height:0;
     overflow:hidden;
     background:#EFF3F7;
     position:relative;
