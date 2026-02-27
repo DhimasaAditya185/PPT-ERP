@@ -1,5 +1,5 @@
-// Service Worker v2 - Force no-cache on all requests
-const VERSION = 'v2';
+// Service Worker v3 - Force no-cache on all requests
+const VERSION = 'v3';
 
 self.addEventListener('install', () => self.skipWaiting());
 
